@@ -1,10 +1,10 @@
 {
-  "name": "template-web-demo",
+  "name": "solid-soap-demo",
   "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/inrupt/template-web-demo.git"
+    "url": "https://github.com/besteves4/solid-soap.git"
   },
   "scripts": {
     "audit": "npm audit --audit-level=moderate",
@@ -18,6 +18,7 @@
   "dependencies": {
     "@inrupt/prism-react-components": "^0.13.1-alpha.2",
     "@inrupt/solid-ui-react": "^2.7.0",
+    "@inrupt/vocab-common-rdf": "^1.0.3",
     "@material-ui/core": "^4.12.3",
     "@solid/lit-prism-patterns": "^0.13.1-alpha.2",
     "@solid/lit-prism-theme-sdk-default": "^0.13.9",
@@ -26,7 +27,8 @@
     "jss-preset-default": "^10.5.1",
     "next": "^12.0.10",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-select": "^5.2.2"
   },
   "devDependencies": {
     "@inrupt/eslint-config-base": "^0.2.0-alpha.1",

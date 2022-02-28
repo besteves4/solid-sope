@@ -19,15 +19,96 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+ import React, {useRef} from 'react';
 import { useSession } from "@inrupt/solid-ui-react";
+import { Button } from "@inrupt/prism-react-components";
+import Select from 'react-select';
+import { createSolidDataset, createThing, setThing, addUrl } from "@inrupt/solid-client";
+import { RDF } from "@inrupt/vocab-common-rdf";
 
 export default function Home() {
   const { session } = useSession();
 
+  let chosenPolicy = ''
+  const permissionBtn= useRef(null);
+  const prohibitionBtn= useRef(null);
+  const handleClickPermission = () => {
+    console.log(permissionBtn.current.value);
+    chosenPolicy = permissionBtn.current.value;
+  }
+  const handleClickProhibition = () => {
+    console.log(prohibitionBtn.current.value);
+    chosenPolicy = prohibitionBtn.current.value;
+  }
+
+  let selectedPD = ''
+  const personalData = [
+    { value: 'FinancialAccount', label: 'Financial Account' },
+    { value: 'PhysicalCharacteristic', label: 'Physical Characteristic' },
+    { value: 'Contact', label: 'Contact' },
+    { value: 'SocialNetwork', label: 'Social Network' }
+  ]
+  const handlePersonalData = (selectedOption) => {
+    selectedPD = selectedOption.value;
+  }
+
+  let selectedPurpose = ''
+  const purpose = [
+    { value: 'LegalCompliance', label: 'Legal Compliance' },
+    { value: 'ResearchAndDevelopment', label: 'Research And Development' },
+    { value: 'ServiceProvision', label: 'Service Provision' }
+  ]
+  const handlePurpose = (selectedOption) => {
+    selectedPurpose = selectedOption.value
+  }
+
+  const generatePolicyBtn= useRef(null);
+  const generatePolicy = () => {
+    console.log(selectedPD + ', ' + selectedPurpose);
+   let emptySolidDataset = createSolidDataset();
+
+    const odrl = "http://www.w3.org/ns/odrl/2/";
+    const odrlPolicy = odrl + "Policy";
+    const odrlPolicyType = odrl + chosenPolicy;
+
+    let policy = createThing({name: "policy1"});
+    policy = addUrl(newBookThing2, RDF.type, odrlPolicy);
+    emptySolidDataset = setThing(emptySolidDataset, policy);
+
+    console.log(emptySolidDataset.graphs.default);
+  }
+
   return (
     <div>
-      <h1>Demo</h1>
-      {session.info.isLoggedIn && <p>Logged in as: {session.info.webId}</p>}
+      {session.info.isLoggedIn &&
+        <div>
+          <div class="container">
+            <div class="center">
+              <p>Chooose type of policy:</p>
+              <Button variant="small" value="permission" onClick={handleClickPermission} ref={permissionBtn}>Permission</Button>
+              <Button variant="small" value="prohibition" onClick={handleClickProhibition} ref={prohibitionBtn}>Prohibition</Button>
+            </div>
+          </div>
+          <div class="container">
+            <div class="">
+              <p>Chooose type of personal data:</p>
+              <Select id="personalData" label="Personal Data" options={personalData} onChange={handlePersonalData}>
+              </Select>
+            </div>
+            <div class="">
+              <p>Chooose purpose:</p>
+              <Select id="purpose" label="Purpose" options={purpose} onChange={handlePurpose}>
+              </Select>
+            </div>
+          </div>
+          <div class="container">
+            <div class="center">
+              <p>Generate policy:</p>
+              <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
+            </div>
+          </div>
+        </div>        
+      }
     </div>
   );
 }

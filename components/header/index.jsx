@@ -59,7 +59,12 @@ export default function Header() {
 
       <div className={bem("header-banner__main-nav")} />
 
+      <div>
+        {session.info.isLoggedIn && <p>Logged in as: {session.info.webId}</p>}
+      </div>
+
       <div className={bem("user-menu")}>
+
         {!sessionRequestInProgress && session.info.isLoggedIn && (
           <LogoutButton
             onError={console.error}
@@ -89,6 +94,7 @@ export default function Header() {
             </LinkButton>
           </LoginButton>
         )}
+
       </div>
     </header>
   );

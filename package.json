@@ -28,6 +28,7 @@
     "jss-preset-default": "^10.5.1",
     "next": "^12.0.10",
     "react": "^17.0.2",
+    "react-d3-tree": "^3.2.1",
     "react-dom": "^17.0.2",
     "react-select": "^5.2.2"
   },

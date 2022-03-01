@@ -24,7 +24,7 @@ import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import Select from 'react-select';
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
-import { RDF } from "@inrupt/vocab-common-rdf";
+import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
 export default function Home() {
@@ -68,12 +68,28 @@ export default function Home() {
     console.log(selectedPD + ', ' + selectedPurpose);
    let emptySolidDataset = createSolidDataset();
 
+    const dpv = "http://www.w3.org/ns/dpv#";
+    const dpvPurpose = dpv + "Purpose";
+
     const odrl = "http://www.w3.org/ns/odrl/2/";
-    const odrlPolicy = odrl + "Policy";
+    const odrlPolicyType = odrl + chosenPolicy;
 
     let policy = createThing({name: "policy1"});
-    policy = addUrl(policy, RDF.type, odrlPolicy);
+    let policyType = createThing({name: chosenPolicy+"1"});
+    policy = addUrl(policy, RDF.type, ODRL.Policy);
+    policy = addUrl(policy, odrlPolicyType, policyType);
     emptySolidDataset = setThing(emptySolidDataset, policy);
+
+    let purposeConstraint = createThing({name: "purposeConstraint"});
+    policyType = addUrl(policyType, ODRL.target, dpv+selectedPD);
+    policyType = addUrl(policyType, ODRL.action, ACL.Read);
+    policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
+    emptySolidDataset = setThing(emptySolidDataset, policyType);
+
+    purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, dpvPurpose);
+    purposeConstSraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
+    purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+selectedPurpose);
+    emptySolidDataset = setThing(emptySolidDataset, purposeConstraint);
 
     try {
       // Save the SolidDataset

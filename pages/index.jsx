@@ -23,7 +23,7 @@
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import Select from 'react-select';
-import { createSolidDataset, createThing, setThing, addUrl } from "@inrupt/solid-client";
+import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
 import { RDF } from "@inrupt/vocab-common-rdf";
 
 export default function Home() {
@@ -69,13 +69,17 @@ export default function Home() {
 
     const odrl = "http://www.w3.org/ns/odrl/2/";
     const odrlPolicy = odrl + "Policy";
-    const odrlPolicyType = odrl + chosenPolicy;
 
     let policy = createThing({name: "policy1"});
-    policy = addUrl(newBookThing2, RDF.type, odrlPolicy);
+    policy = addUrl(policy, RDF.type, odrlPolicy);
     emptySolidDataset = setThing(emptySolidDataset, policy);
 
-    console.log(emptySolidDataset.graphs.default);
+    try {
+      // Save the SolidDataset
+        await saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/file1", emptySolidDataset, { fetch: fetch });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

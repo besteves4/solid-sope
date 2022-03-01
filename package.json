@@ -23,6 +23,7 @@
     "@solid/lit-prism-patterns": "^0.13.1-alpha.2",
     "@solid/lit-prism-theme-sdk-default": "^0.13.9",
     "clsx": "^1.1.1",
+    "d3": "^7.3.0",
     "jss": "^10.5.1",
     "jss-preset-default": "^10.5.1",
     "next": "^12.0.10",

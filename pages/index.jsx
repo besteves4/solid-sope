@@ -76,7 +76,7 @@ export default function Home() {
 
     try {
       // Save the SolidDataset
-        await saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/file1", emptySolidDataset, { fetch: fetch });
+      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/file1", emptySolidDataset, { fetch: fetch });
     } catch (error) {
       console.log(error);
     }

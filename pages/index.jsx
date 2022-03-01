@@ -31,16 +31,6 @@ export default function Home() {
   const { session } = useSession();
 
   let chosenPolicy = ''
-/*   const permissionBtn= useRef(null);
-  const prohibitionBtn= useRef(null);
-  const handleClickPermission = () => {
-    console.log(permissionBtn.current.value);
-    chosenPolicy = permissionBtn.current.value;
-  }
-  const handleClickProhibition = () => {
-    console.log(prohibitionBtn.current.value);
-    chosenPolicy = prohibitionBtn.current.value;
-  } */
   const policyTypes = [
     { value: 'permission', label: 'Permission' },
     { value: 'prohibition', label: 'Prohibition' }
@@ -114,22 +104,17 @@ export default function Home() {
           <div class="container">
             <div class="center">
               <p>Chooose type of policy:</p>
-{/*               <Button variant="small" value="permission" onClick={handleClickPermission} ref={permissionBtn}>Permission</Button>
-              <Button variant="small" value="prohibition" onClick={handleClickProhibition} ref={prohibitionBtn}>Prohibition</Button> */}
-              <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}>
-              </Select>
+              <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
             </div>
           </div>
           <div class="container">
             <div class="">
               <p>Chooose type of personal data:</p>
-              <Select id="personalData" label="Personal Data" options={personalData} onChange={handlePersonalData}>
-              </Select>
+              <Select id="personalData" label="Personal Data" options={personalData} onChange={handlePersonalData}></Select>
             </div>
             <div class="">
               <p>Chooose purpose:</p>
-              <Select id="purpose" label="Purpose" options={purpose} onChange={handlePurpose}>
-              </Select>
+              <Select id="purpose" label="Purpose" options={purpose} onChange={handlePurpose}></Select>
             </div>
           </div>
           <div class="container">

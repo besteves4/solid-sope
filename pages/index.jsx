@@ -87,7 +87,7 @@ export default function Home() {
     emptySolidDataset = setThing(emptySolidDataset, policyType);
 
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, dpvPurpose);
-    purposeConstSraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
+    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
     purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+selectedPurpose);
     emptySolidDataset = setThing(emptySolidDataset, purposeConstraint);
 

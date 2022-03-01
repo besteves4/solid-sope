@@ -25,6 +25,7 @@ import { Button } from "@inrupt/prism-react-components";
 import Select from 'react-select';
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
 import { RDF } from "@inrupt/vocab-common-rdf";
+import { fetch } from "@inrupt/solid-client-authn-browser";
 
 export default function Home() {
   const { session } = useSession();

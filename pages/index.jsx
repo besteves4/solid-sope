@@ -66,7 +66,7 @@ export default function Home() {
   const generatePolicyBtn= useRef(null);
   const generatePolicy = () => {
     console.log(selectedPD + ', ' + selectedPurpose);
-   let emptySolidDataset = createSolidDataset();
+   let newPolicy = createSolidDataset();
 
     const dpv = "http://www.w3.org/ns/dpv#";
     const dpvPurpose = dpv + "Purpose";
@@ -78,22 +78,23 @@ export default function Home() {
     let policyType = createThing({name: chosenPolicy+"1"});
     policy = addUrl(policy, RDF.type, ODRL.Policy);
     policy = addUrl(policy, odrlPolicyType, policyType);
-    emptySolidDataset = setThing(emptySolidDataset, policy);
+    newPolicy = setThing(newPolicy, policy);
 
     let purposeConstraint = createThing({name: "purposeConstraint"});
     policyType = addUrl(policyType, ODRL.target, dpv+selectedPD);
     policyType = addUrl(policyType, ODRL.action, ACL.Read);
     policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
-    emptySolidDataset = setThing(emptySolidDataset, policyType);
+    newPolicy = setThing(newPolicy, policyType);
 
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, dpvPurpose);
     purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
     purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+selectedPurpose);
-    emptySolidDataset = setThing(emptySolidDataset, purposeConstraint);
+    newPolicy = setThing(newPolicy, purposeConstraint);
 
     try {
       // Save the SolidDataset
-      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/file1", emptySolidDataset, { fetch: fetch });
+      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/"+ selectedPD + selectedPurpose, 
+      newPolicy, { fetch: fetch });
     } catch (error) {
       console.log(error);
     }

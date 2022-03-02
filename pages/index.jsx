@@ -104,10 +104,8 @@ export default function Home() {
       {session.info.isLoggedIn &&
         <div>
           <div class="container">
-            <div class="center">
-              <p>Chooose type of policy:</p>
-              <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
-            </div>
+            <p>Chooose type of policy:</p>
+            <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
           </div>
           <div class="container">
             <div class="">

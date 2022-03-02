@@ -57,8 +57,8 @@ const svgSquare = {
   shapeProps: {
     width: 20,
     height: 20,
-    x: 10,
-    y: 10
+    x: -10,
+    y: -10
   }
 };
 
@@ -75,6 +75,10 @@ export default class CenteredTree extends React.PureComponent {
     });
   }
 
+  handleClick(nodeData, evt){
+    console.log(nodeData, evt);
+  }
+
   render() {
     return (
       <div style={containerStyles} ref={(tc) => (this.treeContainer = tc)}>
@@ -84,6 +88,7 @@ export default class CenteredTree extends React.PureComponent {
           orientation={"horizontal"}
           nodeSvgShape={svgSquare}
           circleRadius={5}
+          onNodeClick = {this.handleClick.bind(this)} 
         />
       </div>
     );

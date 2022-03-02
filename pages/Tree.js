@@ -77,11 +77,12 @@ export default class CenteredTree extends React.PureComponent {
 
   handleClick(nodeData, event){
     let modData = debugData;
-    console.log(modData);
-/*     let selectNode = modData.nodes.filter(item => {
-      return item.name === nodeData.data.name;
+    console.log(modData.nodes);
+    let selectNode = modData.nodes.filter(item => {
+      console.log(item);
+      // return item.name === nodeData.data.name;
     });
-    selectNode.forEach(item => {
+/*     selectNode.forEach(item => {
       if (item.color) item.color = "red";
     });
     reactRef.setState({ data: modData }); */

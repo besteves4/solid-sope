@@ -3,7 +3,7 @@ import Tree from "react-d3-tree";
 
 const debugData = [
   {
-    name: "Grapql API",
+    name: "GrapqlAPI",
     children: [
       {
         name: "Query",
@@ -75,8 +75,18 @@ export default class CenteredTree extends React.PureComponent {
     });
   }
 
-  handleClick(nodeData, evt){
-    console.log(nodeData, evt);
+  handleClick(nodeData, event){
+    let modData = debugData;
+    console.log(modData);
+/*     let selectNode = modData.nodes.filter(item => {
+      return item.name === nodeData.data.name;
+    });
+    selectNode.forEach(item => {
+      if (item.color) item.color = "red";
+    });
+    reactRef.setState({ data: modData }); */
+    console.log(nodeData.data.name);
+    console.log(nodeData, event);
   }
 
   render() {

@@ -21,13 +21,14 @@
 
 import React, {useRef} from 'react';
 import Select from 'react-select';
+import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
-import Tree from "./Tree";
+import data from "./data.json";
 
 export default function Home() {
   const { session } = useSession();
@@ -99,6 +100,26 @@ export default function Home() {
     }
   }
 
+  const onChange = (currentNode, selectedNodes) => {
+    for (var i = 0; i < selectedNodes.length; i++) {
+      var value = selectedNodes[i].value;
+      var label = selectedNodes[i].label;
+      console.log(label, value);
+    }
+  };
+
+  const assignObjectPaths = (obj, stack) => {
+    Object.keys(obj).forEach(k => {
+      const node = obj[k];
+      if (typeof node === "object") {
+        node.path = stack ? `${stack}.${k}` : k;
+        assignObjectPaths(node, node.path);
+      }
+    });
+  };
+
+  assignObjectPaths(data);
+
   return (
     <div>
       {session.info.isLoggedIn &&
@@ -123,7 +144,7 @@ export default function Home() {
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>
           </div>
-          <Tree />
+          <DropdownTreeSelect data={data} onChange={onChange} />
         </div>        
       }
     </div>

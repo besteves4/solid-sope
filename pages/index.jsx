@@ -92,7 +92,7 @@ export default function Home() {
 
     try {
       // Save the SolidDataset
-      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/"+ selectedPD + selectedPurpose, 
+      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/"+ chosenPolicy + selectedPD + selectedPurpose, 
       newPolicy, { fetch: fetch });
     } catch (error) {
       console.log(error);

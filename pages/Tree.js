@@ -1,8 +1,6 @@
 import React from "react";
 import Tree from "react-d3-tree";
 
-import './styles.css';
-
 const debugData = [
   {
     name: "GrapqlAPI",

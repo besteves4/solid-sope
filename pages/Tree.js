@@ -58,7 +58,8 @@ const svgSquare = {
     width: 20,
     height: 20,
     x: -10,
-    y: -10
+    y: -10,
+    fill: 'red',
   }
 };
 
@@ -78,6 +79,8 @@ export default class CenteredTree extends React.PureComponent {
   handleClick(nodeData, event){
     let modData = debugData;
     console.log(modData);
+    var json = JSON.parse(debugData);
+    json["name"]
     let selectNode = modData.filter(item => {
       console.log(item);
       // return item.name === nodeData.data.name;
@@ -98,7 +101,6 @@ export default class CenteredTree extends React.PureComponent {
           translate={this.state.translate}
           orientation={"horizontal"}
           nodeSvgShape={svgSquare}
-          circleRadius={5}
           onNodeClick = {this.handleClick.bind(this)} 
         />
       </div>

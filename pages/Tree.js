@@ -1,6 +1,8 @@
 import React from "react";
 import Tree from "react-d3-tree";
 
+import './styles.css';
+
 const debugData = [
   {
     name: "GrapqlAPI",
@@ -77,18 +79,6 @@ export default class CenteredTree extends React.PureComponent {
   }
 
   handleClick(nodeData, event){
-    let modData = debugData;
-    console.log(modData);
-    var json = JSON.parse(debugData);
-    json["name"]
-    let selectNode = modData.filter(item => {
-      console.log(item);
-      // return item.name === nodeData.data.name;
-    });
-/*     selectNode.forEach(item => {
-      if (item.color) item.color = "red";
-    });
-    reactRef.setState({ data: modData }); */
     console.log(nodeData.data.name);
     console.log(nodeData, event);
   }
@@ -101,7 +91,10 @@ export default class CenteredTree extends React.PureComponent {
           translate={this.state.translate}
           orientation={"horizontal"}
           nodeSvgShape={svgSquare}
-          onNodeClick = {this.handleClick.bind(this)} 
+          rootNodeClassName="node__root"
+          branchNodeClassName="node__branch"
+          leafNodeClassName="node__leaf"
+          onNodeClick = {this.handleClick.bind(this)}
         />
       </div>
     );

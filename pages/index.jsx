@@ -21,14 +21,15 @@
 
 import React, {useRef} from 'react';
 import Select from 'react-select';
+import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
-import data from "./personaldata.json";
-import DropdownTreeSelect from "react-dropdown-tree-select";
+import personalData from "./personaldata.json";
+import purpose from "./purpose.json";
 
 export default function Home() {
   const { session } = useSession();
@@ -52,7 +53,8 @@ export default function Home() {
     });
   };
 
-  assignObjectPaths(data);
+  assignObjectPaths(personalData);
+  assignObjectPaths(purpose);
 
   let selectedPD = []
   const handlePersonalData = (currentNode, selectedNodes) => {
@@ -64,19 +66,18 @@ export default function Home() {
     console.log(selectedPD);
   };
 
-  let selectedPurpose = ''
-  const purpose = [
-    { value: 'LegalCompliance', label: 'Legal Compliance' },
-    { value: 'ResearchAndDevelopment', label: 'Research And Development' },
-    { value: 'ServiceProvision', label: 'Service Provision' }
-  ]
-  const handlePurpose = (selectedOption) => {
-    selectedPurpose = selectedOption.value
-  }
+  let selectedPurpose = []
+  const handlePurpose = (currentNode, selectedNodes) => {
+    for (var i = 0; i < selectedNodes.length; i++) {
+      //var value = selectedNodes[i].value;
+      var label = selectedNodes[i].label;
+      selectedPurpose.push(label);
+    }
+    console.log(selectedPurpose);
+  };
 
   const generatePolicyBtn= useRef(null);
   const generatePolicy = () => {
-    //console.log(selectedPD + ', ' + selectedPurpose);
     let newPolicy = createSolidDataset();
 
     const dpv = "http://www.w3.org/ns/dpv#";
@@ -98,19 +99,24 @@ export default function Home() {
       policyType = addUrl(policyType, ODRL.target, dpv+pd);
     }
 
-    //policyType = addUrl(policyType, ODRL.target, dpv+selectedPD);
     policyType = addUrl(policyType, ODRL.action, ACL.Read);
     policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
     newPolicy = setThing(newPolicy, policyType);
 
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, dpvPurpose);
     purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
-    purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+selectedPurpose);
+
+    for (var i = 0; i < selectedPurpose.length; i++) {
+      var purp = selectedPurpose[i];
+      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+purp);
+    }
+
+    //purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+selectedPurpose);
     newPolicy = setThing(newPolicy, purposeConstraint);
 
     try {
       // Save the SolidDataset
-      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/"+ chosenPolicy + selectedPurpose, 
+      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/" + chosenPolicy + selectedPD[0] + selectedPurpose[0], 
       newPolicy, { fetch: fetch });
     } catch (error) {
       console.log(error);
@@ -125,19 +131,26 @@ export default function Home() {
             <p>Chooose type of policy:</p>
             <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
           </div>
-          <div>
-            <DropdownTreeSelect data={data} onChange={handlePersonalData} className="tree-select"/>
-          </div>
           <div class="container">
-{/*             <div class="">
+            <div>
+              <p>Chooose type of personal data:</p>
+              <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
+            </div>
+            <div>
+              <p>Chooose purpose:</p>
+              <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
+            </div>
+          </div>
+{/*           <div class="container">
+            <div class="">
               <p>Chooose type of personal data:</p>
               <Select id="personalData" label="Personal Data" options={personalData} onChange={handlePersonalData}></Select>
-            </div> */}
+            </div>
             <div class="">
               <p>Chooose purpose:</p>
               <Select id="purpose" label="Purpose" options={purpose} onChange={handlePurpose}></Select>
             </div>
-          </div>
+          </div> */}
           <div class="container">
             <div class="center">
               <p>Generate policy:</p>

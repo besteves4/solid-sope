@@ -128,29 +128,21 @@ export default function Home() {
       {session.info.isLoggedIn &&
         <div>
           <div class="container">
-            <p>Chooose type of policy:</p>
-            <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
+            <div class="center">
+              <p>Chooose type of policy:</p>
+              <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
+            </div>
           </div>
           <div class="container">
-            <div>
+            <div class="center">
               <p>Chooose type of personal data:</p>
               <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
             </div>
-            <div>
+            <div class="center">
               <p>Chooose purpose:</p>
               <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
             </div>
           </div>
-{/*           <div class="container">
-            <div class="">
-              <p>Chooose type of personal data:</p>
-              <Select id="personalData" label="Personal Data" options={personalData} onChange={handlePersonalData}></Select>
-            </div>
-            <div class="">
-              <p>Chooose purpose:</p>
-              <Select id="purpose" label="Purpose" options={purpose} onChange={handlePurpose}></Select>
-            </div>
-          </div> */}
           <div class="container">
             <div class="center">
               <p>Generate policy:</p>

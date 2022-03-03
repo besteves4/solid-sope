@@ -76,6 +76,7 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
+  let filenameSave = '';
   const generatePolicyBtn= useRef(null);
   const generatePolicy = () => {
     let newPolicy = createSolidDataset();
@@ -111,12 +112,13 @@ export default function Home() {
       purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+purp);
     }
 
-    //purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+selectedPurpose);
     newPolicy = setThing(newPolicy, purposeConstraint);
+
+    filenameSave = "https://pod.inrupt.com/besteves/odrl_policies/" + chosenPolicy + selectedPD[0] + selectedPurpose[0]
 
     try {
       // Save the SolidDataset
-      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/" + chosenPolicy + selectedPD[0] + selectedPurpose[0], 
+      saveSolidDatasetAt(filenameSave, 
       newPolicy, { fetch: fetch });
     } catch (error) {
       console.log(error);
@@ -138,6 +140,8 @@ export default function Home() {
               <p>Chooose type of personal data:</p>
               <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
             </div>
+          </div>
+          <div class="container">
             <div class="center">
               <p>Chooose purpose:</p>
               <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
@@ -147,6 +151,9 @@ export default function Home() {
             <div class="center">
               <p>Generate policy:</p>
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
+            </div>
+            <div>
+              <p>Saved at: {filenameSave}</p>
             </div>
           </div>
         </div>        

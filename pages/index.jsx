@@ -41,35 +41,6 @@ export default function Home() {
   const handlePolicyType = (selectedOption) => {
     chosenPolicy = selectedOption.value;
   }
-
-  let selectedPD = ''
-  const personalData = [
-    { value: 'FinancialAccount', label: 'Financial Account' },
-    { value: 'PhysicalCharacteristic', label: 'Physical Characteristic' },
-    { value: 'Contact', label: 'Contact' },
-    { value: 'SocialNetwork', label: 'Social Network' }
-  ]
-  const handlePersonalData = (selectedOption) => {
-    selectedPD = selectedOption.value;
-  }
-
-  let selectedPurpose = ''
-  const purpose = [
-    { value: 'LegalCompliance', label: 'Legal Compliance' },
-    { value: 'ResearchAndDevelopment', label: 'Research And Development' },
-    { value: 'ServiceProvision', label: 'Service Provision' }
-  ]
-  const handlePurpose = (selectedOption) => {
-    selectedPurpose = selectedOption.value
-  }
-
-  const onChange = (currentNode, selectedNodes) => {
-    for (var i = 0; i < selectedNodes.length; i++) {
-      //var value = selectedNodes[i].value;
-      var label = selectedNodes[i].label;
-      console.log(label);
-    }
-  };
   
   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach(k => {
@@ -83,10 +54,30 @@ export default function Home() {
 
   assignObjectPaths(data);
 
+  let selectedPD = []
+  const handlePersonalData = (currentNode, selectedNodes) => {
+    for (var i = 0; i < selectedNodes.length; i++) {
+      //var value = selectedNodes[i].value;
+      var label = selectedNodes[i].label;
+      selectedPD.push(label);
+    }
+    console.log(selectedPD);
+  };
+
+  let selectedPurpose = ''
+  const purpose = [
+    { value: 'LegalCompliance', label: 'Legal Compliance' },
+    { value: 'ResearchAndDevelopment', label: 'Research And Development' },
+    { value: 'ServiceProvision', label: 'Service Provision' }
+  ]
+  const handlePurpose = (selectedOption) => {
+    selectedPurpose = selectedOption.value
+  }
+
   const generatePolicyBtn= useRef(null);
   const generatePolicy = () => {
-    console.log(selectedPD + ', ' + selectedPurpose);
-   let newPolicy = createSolidDataset();
+    //console.log(selectedPD + ', ' + selectedPurpose);
+    let newPolicy = createSolidDataset();
 
     const dpv = "http://www.w3.org/ns/dpv#";
     const dpvPurpose = dpv + "Purpose";
@@ -101,7 +92,13 @@ export default function Home() {
     newPolicy = setThing(newPolicy, policy);
 
     let purposeConstraint = createThing({name: "purposeConstraint"});
-    policyType = addUrl(policyType, ODRL.target, dpv+selectedPD);
+
+    for (var i = 0; i < selectedPD.length; i++) {
+      var pd = selectedPD[i];
+      policyType = addUrl(policyType, ODRL.target, dpv+pd);
+    }
+
+    //policyType = addUrl(policyType, ODRL.target, dpv+selectedPD);
     policyType = addUrl(policyType, ODRL.action, ACL.Read);
     policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
     newPolicy = setThing(newPolicy, policyType);
@@ -113,7 +110,7 @@ export default function Home() {
 
     try {
       // Save the SolidDataset
-      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/"+ chosenPolicy + selectedPD + selectedPurpose, 
+      saveSolidDatasetAt("https://pod.inrupt.com/besteves/odrl_policies/"+ chosenPolicy + selectedPurpose, 
       newPolicy, { fetch: fetch });
     } catch (error) {
       console.log(error);
@@ -124,16 +121,18 @@ export default function Home() {
     <div>
       {session.info.isLoggedIn &&
         <div>
-              <DropdownTreeSelect data={data} onChange={onChange} className="tree-select"/>
           <div class="container">
             <p>Chooose type of policy:</p>
             <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
           </div>
+          <div>
+            <DropdownTreeSelect data={data} onChange={handlePersonalData} className="tree-select"/>
+          </div>
           <div class="container">
-            <div class="">
+{/*             <div class="">
               <p>Chooose type of personal data:</p>
               <Select id="personalData" label="Personal Data" options={personalData} onChange={handlePersonalData}></Select>
-            </div>
+            </div> */}
             <div class="">
               <p>Chooose purpose:</p>
               <Select id="purpose" label="Purpose" options={purpose} onChange={handlePurpose}></Select>

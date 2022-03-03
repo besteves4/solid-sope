@@ -3,16 +3,16 @@
       "label": "Financial",
       "children": [
         {
-          "label": "Financial Account",
+          "label": "FinancialAccount",
           "children": [
             {
-              "label": "Account Identifier"
+              "label": "AccountIdentifier"
             },
             {
-              "label": "Bank Account"
+              "label": "BankAccount"
             },
             {
-              "label": "Payment Card"
+              "label": "PaymentCard"
             }
           ]
         },
@@ -20,10 +20,10 @@
           "label": "Ownership",
           "children": [
             {
-              "label": "House Owned"
+              "label": "HouseOwned"
             },
             {
-              "label": "Personal Possession"
+              "label": "PersonalPossession"
             }
           ]
         },
@@ -37,13 +37,13 @@
               "label": "Income"
             },
             {
-              "label": "Loan Record"
+              "label": "LoanRecord"
             },
             {
               "label": "Purchase"
             },
             {
-              "label": "Purchases And Spending Habit"
+              "label": "PurchasesAndSpendingHabit"
             }
           ]
         }
@@ -59,13 +59,13 @@
               "label": "Attitude"
             },
             {
-              "label": "Authentication History"
+              "label": "AuthenticationHistory"
             },
             {
-              "label": "Browsing Behavior"
+              "label": "BrowsingBehavior"
             },
             {
-              "label": "Call Log"
+              "label": "CallLog"
             }
           ]
         },
@@ -76,7 +76,7 @@
               "label": "Geographic"
             },
             {
-              "label": "Income Bracket"
+              "label": "IncomeBracket"
             },
             {
               "label": "PhysicalTrait"

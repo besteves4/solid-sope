@@ -24,7 +24,7 @@ import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
-import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
+import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, getPodUrlAll } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
@@ -114,15 +114,18 @@ export default function Home() {
 
     newPolicy = setThing(newPolicy, purposeConstraint);
 
-    filenameSave = "https://pod.inrupt.com/besteves/odrl_policies/" + chosenPolicy + selectedPD[0] + selectedPurpose[0]
+    getPodUrlAll(session.info.webId).then(response => {
+      const podRoot = response[0];
+      filenameSave = `${podRoot}private/odrl_policies/${chosenPolicy}${selectedPD[0]}${selectedPurpose[0]}`;
 
-    try {
-      // Save the SolidDataset
-      saveSolidDatasetAt(filenameSave, 
-      newPolicy, { fetch: fetch });
-    } catch (error) {
-      console.log(error);
-    }
+      try {
+        // Save the SolidDataset
+        saveSolidDatasetAt(filenameSave,
+            newPolicy, { fetch: fetch });
+      } catch (error) {
+        console.log(error);
+      }
+    })
   }
 
   return (

@@ -21,14 +21,14 @@
 
 import React, {useRef} from 'react';
 import Select from 'react-select';
-import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
-import data from "./data.json";
+import data from "./personaldata.json";
+import DropdownTreeSelect from "react-dropdown-tree-select";
 
 export default function Home() {
   const { session } = useSession();
@@ -62,6 +62,26 @@ export default function Home() {
   const handlePurpose = (selectedOption) => {
     selectedPurpose = selectedOption.value
   }
+
+  const onChange = (currentNode, selectedNodes) => {
+    for (var i = 0; i < selectedNodes.length; i++) {
+      //var value = selectedNodes[i].value;
+      var label = selectedNodes[i].label;
+      console.log(label);
+    }
+  };
+  
+  const assignObjectPaths = (obj, stack) => {
+    Object.keys(obj).forEach(k => {
+      const node = obj[k];
+      if (typeof node === "object") {
+        node.path = stack ? `${stack}.${k}` : k;
+        assignObjectPaths(node, node.path);
+      }
+    });
+  };
+
+  assignObjectPaths(data);
 
   const generatePolicyBtn= useRef(null);
   const generatePolicy = () => {
@@ -100,30 +120,11 @@ export default function Home() {
     }
   }
 
-  const onChange = (currentNode, selectedNodes) => {
-    for (var i = 0; i < selectedNodes.length; i++) {
-      var value = selectedNodes[i].value;
-      var label = selectedNodes[i].label;
-      console.log(label, value);
-    }
-  };
-
-  const assignObjectPaths = (obj, stack) => {
-    Object.keys(obj).forEach(k => {
-      const node = obj[k];
-      if (typeof node === "object") {
-        node.path = stack ? `${stack}.${k}` : k;
-        assignObjectPaths(node, node.path);
-      }
-    });
-  };
-
-  assignObjectPaths(data);
-
   return (
     <div>
       {session.info.isLoggedIn &&
         <div>
+              <DropdownTreeSelect data={data} onChange={onChange} className="tree-select"/>
           <div class="container">
             <p>Chooose type of policy:</p>
             <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
@@ -144,7 +145,6 @@ export default function Home() {
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>
           </div>
-          <DropdownTreeSelect data={data} onChange={onChange} />
         </div>        
       }
     </div>

@@ -1,0 +1,89 @@
+[
+    {
+      "label": "Financial",
+      "children": [
+        {
+          "label": "Financial Account",
+          "children": [
+            {
+              "label": "Account Identifier"
+            },
+            {
+              "label": "Bank Account"
+            },
+            {
+              "label": "Payment Card"
+            }
+          ]
+        },
+        {
+          "label": "Ownership",
+          "children": [
+            {
+              "label": "House Owned"
+            },
+            {
+              "label": "Personal Possession"
+            }
+          ]
+        },
+        {
+          "label": "Transactional",
+          "children": [
+            {
+              "label": "Credit"
+            },
+            {
+              "label": "Income"
+            },
+            {
+              "label": "Loan Record"
+            },
+            {
+              "label": "Purchase"
+            },
+            {
+              "label": "Purchases And Spending Habit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "External",
+      "children": [
+        {
+          "label": "Behavioral",
+          "children": [
+            {
+              "label": "Attitude"
+            },
+            {
+              "label": "Authentication History"
+            },
+            {
+              "label": "Browsing Behavior"
+            },
+            {
+              "label": "Call Log"
+            }
+          ]
+        },
+        {
+          "label": "Demographic",
+          "children": [
+            {
+              "label": "Geographic"
+            },
+            {
+              "label": "Income Bracket"
+            },
+            {
+              "label": "PhysicalTrait"
+            }
+          ]
+        }
+    ]
+    }
+  ]
+  

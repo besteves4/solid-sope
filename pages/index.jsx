@@ -152,9 +152,9 @@ export default function Home() {
               <p>Generate policy:</p>
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>
-            <div>
+{/*             <div>
               <p>Saved at: {filenameSave}</p>
-            </div>
+            </div> */}
           </div>
         </div>        
       }

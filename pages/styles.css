@@ -71,7 +71,6 @@ body {
     sans-serif;
 }
 
-/* fallback, until https://github.com/CompuIves/codesandbox-client/issues/174 is resolved */
 @font-face {
   font-family: "Material Icons";
   font-style: normal;

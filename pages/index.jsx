@@ -23,7 +23,7 @@ import React, {useRef} from 'react';
 import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
-import { Button } from "@inrupt/prism-react-components";
+import { Button, SimpleInput } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, getPodUrlAll } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
@@ -236,7 +236,7 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
-  let filenameSave = '';
+  const regInput = useRef(null);
   const generatePolicyBtn= useRef(null);
   const generatePolicy = () => {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
@@ -285,7 +285,8 @@ export default function Home() {
         alert("Choose the purpose of the policy");
       } else {
         const podRoot = response[0];
-        filenameSave = `${podRoot}private/odrl_policies/${chosenPolicy}${selectedPD[0]}${selectedPurpose[0]}`;
+        const filename = regInput.current.value;
+        const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
         try {
           // Save the SolidDataset
           saveSolidDatasetAt(filenameSave,
@@ -340,12 +341,12 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
+            <div class="bottom-container">
+              <SimpleInput placeholder='Enter filename for the policy' ref={regInput}></SimpleInput>
+            </div>
             <div class="">
               <p>Generate policy:</p>
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
-            </div>
-            <div class="bottom-container">
-              {/* <p>Saved at: {filenameSave}</p> */}
             </div>
           </div>
         </div>        

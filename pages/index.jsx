@@ -236,10 +236,10 @@ export default function Home() {
     let newPolicy = createSolidDataset();
 
     const dpv = "http://www.w3.org/ns/dpv#";
-    const dpvPurpose = dpv + "Purpose";
+    const dpvPurpose = `${dpv}Purpose`;
 
     const odrl = "http://www.w3.org/ns/odrl/2/";
-    const odrlPolicyType = odrl + chosenPolicy;
+    const odrlPolicyType = `${odrl}${chosenPolicy}`;
 
     let policy = createThing({name: "policy1"});
     let policyType = createThing({name: chosenPolicy+"1"});
@@ -251,7 +251,7 @@ export default function Home() {
 
     for (var i = 0; i < selectedPD.length; i++) {
       var pd = selectedPD[i];
-      policyType = addUrl(policyType, ODRL.target, dpv+pd);
+      policyType = addUrl(policyType, ODRL.target, `${dpv}${pd}`);
     }
 
     policyType = addUrl(policyType, ODRL.action, ACL.Read);
@@ -263,7 +263,7 @@ export default function Home() {
 
     for (var i = 0; i < selectedPurpose.length; i++) {
       var purp = selectedPurpose[i];
-      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, dpv+purp);
+      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
     }
 
     newPolicy = setThing(newPolicy, purposeConstraint);

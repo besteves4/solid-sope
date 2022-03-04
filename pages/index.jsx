@@ -239,6 +239,7 @@ export default function Home() {
   let filenameSave = '';
   const generatePolicyBtn= useRef(null);
   const generatePolicy = () => {
+    // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
     let newPolicy = createSolidDataset();
 
     const dpv = "http://www.w3.org/ns/dpv#";
@@ -282,7 +283,7 @@ export default function Home() {
         alert("Choose the categories of personal data of the policy");
       } else if (selectedPurpose.length < 1) {
         alert("Choose the purpose of the policy");
-      }
+      } else {
         const podRoot = response[0];
         filenameSave = `${podRoot}private/odrl_policies/${chosenPolicy}${selectedPD[0]}${selectedPurpose[0]}`;
         try {
@@ -292,9 +293,7 @@ export default function Home() {
         } catch (error) {
           console.log(error);
         }
-      
-
-
+      }
     })
   }
 

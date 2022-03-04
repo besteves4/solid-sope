@@ -281,31 +281,36 @@ export default function Home() {
       }
     })
   }
-
+  const customStyles = {
+    container: provided => ({
+      ...provided,
+      width: 200
+    })
+  };
   return (
     <div>
       {session.info.isLoggedIn &&
         <div>
           <div class="container">
-            <div class="center">
-              <p>Chooose type of policy:</p>
-              <Select id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
+            <div class="">
+              <p class="">Chooose type of policy:</p>
+              <Select styles={customStyles} id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
             </div>
           </div>
           <div class="container">
-            <div class="center">
+            <div class="">
               <p>Chooose type of personal data:</p>
               <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="center">
+            <div class="">
               <p>Chooose purpose:</p>
               <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="center">
+            <div class="">
               <p>Generate policy:</p>
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>

@@ -275,25 +275,26 @@ export default function Home() {
     newPolicy = setThing(newPolicy, purposeConstraint);
 
     getPodUrlAll(session.info.webId).then(response => {
-      const podRoot = response[0];
 
       if (chosenPolicy === "") {
         alert("Choose a type of policy");
-      } else if (selectedPD.length > 0) {
+      } else if (selectedPD.length < 1) {
         alert("Choose the categories of personal data of the policy");
-      } else if (selectedPurpose.length > 0) {
+      } else if (selectedPurpose.length < 1) {
         alert("Choose the purpose of the policy");
       }
+        const podRoot = response[0];
+        filenameSave = `${podRoot}private/odrl_policies/${chosenPolicy}${selectedPD[0]}${selectedPurpose[0]}`;
+        try {
+          // Save the SolidDataset
+          saveSolidDatasetAt(filenameSave,
+              newPolicy, { fetch: fetch });
+        } catch (error) {
+          console.log(error);
+        }
+      
 
-      filenameSave = `${podRoot}private/odrl_policies/${chosenPolicy}${selectedPD[0]}${selectedPurpose[0]}`;
 
-      try {
-        // Save the SolidDataset
-        saveSolidDatasetAt(filenameSave,
-            newPolicy, { fetch: fetch });
-      } catch (error) {
-        console.log(error);
-      }
     })
   }
 

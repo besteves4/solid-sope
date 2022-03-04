@@ -276,6 +276,15 @@ export default function Home() {
 
     getPodUrlAll(session.info.webId).then(response => {
       const podRoot = response[0];
+
+      if (chosenPolicy === "") {
+        alert("Choose a type of policy");
+      } else if (selectedPD.length > 0) {
+        alert("Choose the categories of personal data of the policy");
+      } else if (selectedPurpose.length > 0) {
+        alert("Choose the purpose of the policy");
+      }
+
       filenameSave = `${podRoot}private/odrl_policies/${chosenPolicy}${selectedPD[0]}${selectedPurpose[0]}`;
 
       try {

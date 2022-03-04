@@ -196,6 +196,12 @@ export default function Home() {
   const handlePolicyType = (selectedOption) => {
     chosenPolicy = selectedOption.value;
   }
+  const customStyles = {
+    container: provided => ({
+      ...provided,
+      width: 200
+    })
+  };
   
   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach(k => {
@@ -281,16 +287,31 @@ export default function Home() {
       }
     })
   }
-  const customStyles = {
-    container: provided => ({
-      ...provided,
-      width: 200
-    })
-  };
+
   return (
     <div>
+      {!session.info.isLoggedIn &&
+        <div class="logged-out">
+          <p>SOAP is a Solid ODRL Access Policies editor for users of Solid apps.</p>
+          <p>
+            It allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
+            to govern the access to Pod resources and to store them on your Pod.
+          </p>
+          <p>To get started, log in to your Pod and select the type of policy you want to model.</p>
+          <p>Next, you can choose the types of personal data and purposes to which the policy applies.</p>
+          <p>Finally, you can generate the ODRL policy's RDF by clicking the "Generate" button and save it in your Pod.</p>
+          <p><a href='mailto:beatriz.gesteves@upm.es'>Contact Me</a></p>
+        </div>
+      }
       {session.info.isLoggedIn &&
         <div>
+          <div class="logged-in">
+              SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
+              to govern the access to Pod resources and to store them on your Pod.
+              Select the type of policy you want to model,
+              choose the types of personal data and purposes to which the policy applies and
+              generate the ODRL policy's RDF by clicking the "Generate" button and save it in your Pod.
+          </div>
           <div class="container">
             <div class="">
               <p class="">Chooose type of policy:</p>
@@ -314,9 +335,9 @@ export default function Home() {
               <p>Generate policy:</p>
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>
-{/*             <div>
-              <p>Saved at: {filenameSave}</p>
-            </div> */}
+            <div class="bottom-container">
+              {/* <p>Saved at: {filenameSave}</p> */}
+            </div>
           </div>
         </div>        
       }

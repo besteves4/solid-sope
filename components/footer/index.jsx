@@ -26,10 +26,10 @@ import config from "../../config";
 const CONFIG = config();
 
 const footerLinks = [
-  {
+/*   {
     text: "View Demo on GitHub",
     href: CONFIG.demoRepoUrl,
-  },
+  }, */
   {
     text: "View Project on GitHub",
     href: CONFIG.libraryRepoUrl,

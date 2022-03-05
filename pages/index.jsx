@@ -236,8 +236,8 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
-  const regInput = useRef(null);
-  const generatePolicyBtn= useRef(null);
+  const regInput = useRef();
+  const generatePolicyBtn= useRef();
   const generatePolicy = () => {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
     let newPolicy = createSolidDataset();

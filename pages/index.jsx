@@ -285,8 +285,10 @@ export default function Home() {
         alert("Choose the purpose of the policy");
       } else {
         const podRoot = response[0];
-        const filename = regInput.current.value;
-        const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
+/*         const filename = regInput.current.value;
+        const filenameSave = `${podRoot}private/odrl_policies/${filename}`; */
+        console.log(regInput);
+        const filenameSave = `${podRoot}private/odrl_policies/fhgdhgfdghf`;
         try {
           // Save the SolidDataset
           saveSolidDatasetAt(filenameSave,
@@ -341,10 +343,10 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-            <div class="bottom-container">
+            <div class="">
               <SimpleInput placeholder='Enter filename for the policy' ref={regInput}></SimpleInput>
             </div>
-            <div class="">
+            <div class="bottom-container">
               <p>Generate policy:</p>
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>

@@ -23,7 +23,7 @@ import React, {useRef} from 'react';
 import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
-import { Button, SimpleInput } from "@inrupt/prism-react-components";
+import { Button, Input } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, getPodUrlAll } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
@@ -344,7 +344,7 @@ export default function Home() {
           </div>
           <div class="container">
             <div class="">
-              <SimpleInput placeholder='Enter filename for the policy' ref={regInput}></SimpleInput>
+              <Input placeholder='Enter filename for the policy' ref={regInput}></Input>
             </div>
             <div class="bottom-container">
               <p>Generate policy:</p>

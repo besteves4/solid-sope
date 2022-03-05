@@ -236,7 +236,8 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
-  const regInput = useRef();
+  handleChange = (event) => {this.setState({value: event.target.value});}
+
   const generatePolicyBtn= useRef();
   const generatePolicy = () => {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
@@ -287,7 +288,7 @@ export default function Home() {
         const podRoot = response[0];
 /*         const filename = regInput.current.value;
         const filenameSave = `${podRoot}private/odrl_policies/${filename}`; */
-        console.log(regInput);
+        console.log(this.state.value);
         const filenameSave = `${podRoot}private/odrl_policies/fhgdhgfdghf`;
         try {
           // Save the SolidDataset
@@ -344,7 +345,7 @@ export default function Home() {
           </div>
           <div class="container">
             <div class="">
-              <Input placeholder='Enter filename for the policy' ref={regInput}></Input>
+              <Input placeholder='Enter filename for the policy' value={this.state.value} onChange={this.handleChange}></Input>
             </div>
             <div class="bottom-container">
               <p>Generate policy:</p>

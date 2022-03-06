@@ -304,7 +304,7 @@ export default function Home() {
         const policyList = getPolicyFilenames(podPoliciesContainer)
 
         const filename = inputValue.current.state.value;
-        if(policyList.includes(filename)){
+        if(policyList.indexOf(filename) > -1){
           alert("There is already a policy with that name, choose another");
         } else {
           const filenameSave = `${podRoot}private/odrl_policies/${filename}`;

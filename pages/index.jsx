@@ -236,7 +236,7 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
-  handleChange = (event) => {this.setState({value: event.target.value});}
+  const handleChange = (event) => {this.setState({value: event.target.value});}
 
   const generatePolicyBtn= useRef();
   const generatePolicy = () => {
@@ -345,7 +345,7 @@ export default function Home() {
           </div>
           <div class="container">
             <div class="">
-              <Input placeholder='Enter filename for the policy' value={this.state.value} onChange={this.handleChange}></Input>
+              <Input placeholder='Enter filename for the policy' value={this.state.value} onChange={handleChange}></Input>
             </div>
             <div class="bottom-container">
               <p>Generate policy:</p>

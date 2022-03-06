@@ -35,23 +35,12 @@ import personalData from "./personaldata.json";
 import purpose from "./purpose.json";
 
 async function getPolicyFilenames(policiesContainer) {
-/*   const myDataset = await getSolidDataset(
-    "https://pod.inrupt.com/besteves/private/odrl_policies/", {
-    fetch: fetch
-  }); */
-
-/*   const profile = getThing(
-    myDataset,
-    "https://pod.inrupt.com/besteves/private/odrl_policies/"
-  ); */
-  console.log(policiesContainer)
   const myDataset = await getSolidDataset(
     policiesContainer, {
     fetch: fetch
   });
 
   const profile = getContainedResourceUrlAll(myDataset);
-
   console.log(profile);
   return(profile);
 }
@@ -312,19 +301,20 @@ export default function Home() {
       } else {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
+        const policyList = getPolicyFilenames(podPoliciesContainer)
 
         const filename = inputValue.current.state.value;
-        const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
-
-        const policyList = getPolicyFilenames(podPoliciesContainer)
-        console.log(policyList);
-
-        try {
-          // Save the SolidDataset
-          saveSolidDatasetAt(filenameSave,
-              newPolicy, { fetch: fetch });
-        } catch (error) {
-          console.log(error);
+        if(policyList.includes(filename)){
+          alert("There is already a policy with that name, choose another");
+        } else {
+          const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
+          try {
+            // Save the SolidDataset
+            saveSolidDatasetAt(filenameSave,
+                newPolicy, { fetch: fetch });
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
     })

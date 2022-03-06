@@ -34,20 +34,26 @@ import Input from "./input.js";
 import personalData from "./personaldata.json";
 import purpose from "./purpose.json";
 
-async function authenticatedFetch() {
-// 3. Make authenticated requests by passing `fetch` to the solid-client functions.
-  // For example, the user must be someone with Read access to the specified URL.
-  const myDataset = await getSolidDataset(
+async function getPolicyFilenames(policiesContainer) {
+/*   const myDataset = await getSolidDataset(
     "https://pod.inrupt.com/besteves/private/odrl_policies/", {
+    fetch: fetch
+  }); */
+
+/*   const profile = getThing(
+    myDataset,
+    "https://pod.inrupt.com/besteves/private/odrl_policies/"
+  ); */
+  console.log(policiesContainer)
+  const myDataset = await getSolidDataset(
+    policiesContainer, {
     fetch: fetch
   });
 
-  const profile = getThing(
-    myDataset,
-    "https://pod.inrupt.com/besteves/private/odrl_policies/"
-  );
+  const profile = getContainedResourceUrlAll(myDataset);
 
-  console.log(profile)
+  console.log(profile);
+  return(profile);
 }
 
 export default function Home() {
@@ -305,12 +311,13 @@ export default function Home() {
         alert("Choose the purpose of the policy");
       } else {
         const podRoot = response[0];
+        const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
+
         const filename = inputValue.current.state.value;
         const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
 
-        const policiesContainer = getSolidDataset(`${podRoot}profile/card`, { fetch: fetch }); //get value from Promise
-        const profile = getThing(policiesContainer, `${podRoot}profile/card#me`);
-        console.log(profile);
+        const policyList = getPolicyFilenames(podPoliciesContainer)
+        console.log(policyList);
 
         try {
           // Save the SolidDataset
@@ -372,7 +379,7 @@ export default function Home() {
             </div>
             <div class="bottom-container">
               <p>Generate policy:</p>
-              <Button variant="small" value="permission" onClick={authenticatedFetch} ref={generatePolicyBtn}>Generate</Button>
+              <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>
           </div>
         </div>        

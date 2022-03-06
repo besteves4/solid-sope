@@ -34,7 +34,7 @@ import Input from "./input.js";
 import personalData from "./personaldata.json";
 import purpose from "./purpose.json";
 
-export default function Home() {
+export default async function Home() {
   const { session } = useSession();
 
   // d3 tree diagram from https://bl.ocks.org/d3noob/8375092

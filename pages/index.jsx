@@ -34,12 +34,8 @@ import Input from "./input.js";
 import personalData from "./personaldata.json";
 import purpose from "./purpose.json";
 
-const { session } = useSession();
-
 async function authenticatedFetch() {
-
-
-  // 3. Make authenticated requests by passing `fetch` to the solid-client functions.
+// 3. Make authenticated requests by passing `fetch` to the solid-client functions.
   // For example, the user must be someone with Read access to the specified URL.
   const myDataset = await getSolidDataset(
     "https://pod.inrupt.com/besteves/private/odrl_policies/", {
@@ -54,10 +50,8 @@ async function authenticatedFetch() {
   console.log(profile)
 }
 
-authenticatedFetch();
-
 export default function Home() {
-  // const { session } = useSession();
+  const { session } = useSession();
 
   // d3 tree diagram from https://bl.ocks.org/d3noob/8375092
   /* const treeData = [

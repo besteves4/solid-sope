@@ -28,6 +28,7 @@ import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";
+import Input from "./input.js";
 
 import personalData from "./personaldata.json";
 import purpose from "./purpose.json";
@@ -236,9 +237,8 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
-  const handleChange = (event) => {this.setState({value: event.target.value});}
-
-  const generatePolicyBtn= useRef();
+  const inputValue = useRef();
+  const generatePolicyBtn = useRef();
   const generatePolicy = () => {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
     let newPolicy = createSolidDataset();
@@ -286,10 +286,10 @@ export default function Home() {
         alert("Choose the purpose of the policy");
       } else {
         const podRoot = response[0];
+        console.log(inputValue);
 /*         const filename = regInput.current.value;
         const filenameSave = `${podRoot}private/odrl_policies/${filename}`; */
-        console.log(this.state.value);
-        const filenameSave = `${podRoot}private/odrl_policies/fhgdhgfdghf`;
+        const filenameSave = `${podRoot}private/odrl_policies/isaugdfjsgjdhf`;
         try {
           // Save the SolidDataset
           saveSolidDatasetAt(filenameSave,
@@ -345,7 +345,8 @@ export default function Home() {
           </div>
           <div class="container">
             <div class="">
-              <Input placeholder='Enter filename for the policy' value={this.state.value} onChange={handleChange}></Input>
+              {/* <Input placeholder='Enter filename for the policy' value={this.state.value} onChange={handleChange}></Input> */}
+              <Input ref={inputValue} />
             </div>
             <div class="bottom-container">
               <p>Generate policy:</p>

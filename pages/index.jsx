@@ -293,7 +293,7 @@ export default function Home() {
         const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
 
         const policiesContainer = getSolidDataset(`${podRoot}private/odrl_policies/`, { fetch: fetch });
-        console.log(getContainedResourceUrlAll(policiesContainer));
+        console.log(policiesContainer);
 
         try {
           // Save the SolidDataset

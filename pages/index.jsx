@@ -25,7 +25,7 @@ import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getThing } from "@inrupt/solid-client";
+  getPodUrlAll, getSolidDataset, getThing, getContainedResourceUrlAll } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";

@@ -292,8 +292,9 @@ export default function Home() {
         const filename = inputValue.current.state.value;
         const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
 
-        const policiesContainer = getSolidDataset(`${podRoot}private/odrl_policies/`, { fetch: fetch });
-        console.log(policiesContainer.value);
+        const policiesContainer = getSolidDataset(`${podRoot}private/odrl_policies/`, { fetch: fetch }); //get value from Promise
+        const profile = getThing(policiesContainer, `${podRoot}private/odrl_policies/`);
+        console.log(profile);
 
         try {
           // Save the SolidDataset

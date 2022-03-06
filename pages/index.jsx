@@ -24,7 +24,8 @@ import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
-import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, getPodUrlAll, getSolidDataset, getThing } from "@inrupt/solid-client";
+import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
+  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";
@@ -291,11 +292,8 @@ export default function Home() {
         const filename = inputValue.current.state.value;
         const filenameSave = `${podRoot}private/odrl_policies/${filename}`;
 
-        console.log(getSolidDataset(`${podRoot}private/odrl_policies`, { fetch: fetch }));
-/*         const profile = getThing(
-          myDataset,
-          `${podRoot}private/odrl_policies`
-        ); */
+        policiesContainer = getSolidDataset(`${podRoot}private/odrl_policies`, { fetch: fetch });
+        console.log(getContainedResourceUrlAll(policiesContainer));
 
         try {
           // Save the SolidDataset

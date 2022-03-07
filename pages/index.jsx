@@ -43,10 +43,10 @@ async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
   const policyList = getContainedResourceUrlAll(myDataset);
   console.log(filename, policyList);
 
-  if(policyList.includes(filename)){
+  const filenameSave = `${policiesContainer}${filename}`;
+  if(policyList.includes(filenameSave)){
     alert("There is already a policy with that name, choose another");
   } else {
-    const filenameSave = `${policiesContainer}${filename}`;
     try {
       await saveSolidDatasetAt(filenameSave,
         newPolicy, { fetch: fetch });
@@ -54,8 +54,6 @@ async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
       console.log(error);
     }
   }
-
-  return(profile);
 }
 
 export default function Home() {
@@ -315,7 +313,7 @@ export default function Home() {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
-        getPolicyFilenames(podPoliciesContainer, filename, newPolicy)
+        getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
       }
     })
   }

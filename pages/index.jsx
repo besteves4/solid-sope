@@ -281,12 +281,11 @@ export default function Home() {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
     let newPolicy = createSolidDataset();
 
-    const acl = "http://www.w3.org/ns/auth/acl#";
-
     const dpv = "http://www.w3.org/ns/dpv#";
-    const dpvPurpose = `${dpv}Purpose`;
-
     const odrl = "http://www.w3.org/ns/odrl/2/";
+    const oac = "https://w3id.org/oac/";
+
+    const oacPurpose = `${oac}Purpose`;
     const odrlPolicyType = `${odrl}${chosenPolicy}`;
 
     let policy = createThing({name: "policy1"});
@@ -299,19 +298,19 @@ export default function Home() {
 
     for (var i = 0; i < selectedPD.length; i++) {
       var pd = selectedPD[i];
-      policyType = addUrl(policyType, ODRL.target, `${dpv}${pd}`);
+      policyType = addUrl(policyType, ODRL.target, `${oac}${pd}`);
     }
 
     for (var i = 0; i < selectedAccess.length; i++) {
       var acc = selectedAccess[i];
-      policyType = addUrl(policyType, ODRL.target, `${acl}${acc}`);
+      policyType = addUrl(policyType, ODRL.action, `${oac}${acc}`);
     }
 
-    // policyType = addUrl(policyType, ODRL.action, ACL.Read);
+    policyType = addUrl(policyType, ODRL.assigner, session.info.webId);
     policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
     newPolicy = setThing(newPolicy, policyType);
 
-    purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, dpvPurpose);
+    purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
     purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
 
     for (var i = 0; i < selectedPurpose.length; i++) {

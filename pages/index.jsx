@@ -34,7 +34,7 @@ import Input from "./input.js";
 import personalData from "./personaldata.json";
 import purpose from "./purpose.json";
 
-async function getPolicyFilenames(policiesContainer, filename) {
+async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
   const myDataset = await getSolidDataset(
     policiesContainer, {
     fetch: fetch
@@ -48,7 +48,7 @@ async function getPolicyFilenames(policiesContainer, filename) {
   } else {
     const filenameSave = `${policiesContainer}${filename}`;
     try {
-      saveSolidDatasetAt(filenameSave,
+      await saveSolidDatasetAt(filenameSave,
         newPolicy, { fetch: fetch });
     } catch (error) {
       console.log(error);
@@ -315,7 +315,7 @@ export default function Home() {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
-        getPolicyFilenames(podPoliciesContainer, filename)
+        getPolicyFilenames(podPoliciesContainer, filename, newPolicy)
       }
     })
   }

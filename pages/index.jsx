@@ -25,7 +25,7 @@ import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getThing, getContainedResourceUrlAll } from "@inrupt/solid-client";
+  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
 import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";
@@ -260,11 +260,28 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
+  const access = [
+    { "label": "Read" },
+    { "label": "Write" },
+    { "label": "Append" }
+  ]
+  let selectedAccess = []
+  const handleAccess = (currentNode, selectedNodes) => {
+    for (var i = 0; i < selectedNodes.length; i++) {
+      //var value = selectedNodes[i].value;
+      var label = selectedNodes[i].label;
+      selectedAccess.push(label);
+    }
+    console.log(selectedAccess);
+  };
+
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
   const generatePolicy = () => {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
     let newPolicy = createSolidDataset();
+
+    const acl = "http://www.w3.org/ns/auth/acl#";
 
     const dpv = "http://www.w3.org/ns/dpv#";
     const dpvPurpose = `${dpv}Purpose`;
@@ -285,7 +302,12 @@ export default function Home() {
       policyType = addUrl(policyType, ODRL.target, `${dpv}${pd}`);
     }
 
-    policyType = addUrl(policyType, ODRL.action, ACL.Read);
+    for (var i = 0; i < selectedAccess.length; i++) {
+      var acc = selectedAccess[i];
+      policyType = addUrl(policyType, ODRL.target, `${acl}${acc}`);
+    }
+
+    // policyType = addUrl(policyType, ODRL.action, ACL.Read);
     policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
     newPolicy = setThing(newPolicy, policyType);
 
@@ -307,8 +329,8 @@ export default function Home() {
         alert("Choose the categories of personal data of the policy");
       } else if (selectedPurpose.length < 1) {
         alert("Choose the purpose of the policy");
-      } else if (selectedPurpose.length < 1) {
-        alert("Choose the purpose of the policy");
+      } else if (selectedAccess.length < 1) {
+        alert("Choose the access modes applicable to the policy");
       } else {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
@@ -339,34 +361,40 @@ export default function Home() {
               SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
               to govern the access to Pod resources and to store them on your Pod.
               Select the type of policy you want to model,
-              choose the types of personal data and purposes to which the policy applies and
-              generate the ODRL policy's RDF by clicking the "Generate" button and save it in your Pod.
+              choose the types of personal data and purposes to which the policy applies,
+              generate the ODRL policy's RDF and save it in your Pod by clicking on the "Generate" button.
           </div>
           <div class="container">
             <div class="">
-              <p class="">Chooose type of policy:</p>
+              <p><b>Choose type of policy:</b></p>
               <Select styles={customStyles} id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
             </div>
           </div>
           <div class="container">
             <div class="">
-              <p>Chooose type of personal data:</p>
+              <p><b>Choose type of personal data:</b></p>
               <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
             </div>
           </div>
           <div class="container">
             <div class="">
-              <p>Chooose purpose:</p>
+              <p><b>Choose purpose:</b></p>
               <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
             </div>
           </div>
           <div class="container">
             <div class="">
-              <p>Save as:</p>
+              <p><b>Choose applicable access modes:</b></p>
+              <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
+            </div>
+          </div>
+          <div class="container">
+            <div class="">
+              <p><b>Save as:</b></p>
               <Input ref={inputValue} />
             </div>
             <div class="bottom-container">
-              <p>Generate policy:</p>
+              <p><b>Generate policy:</b></p>
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>
           </div>

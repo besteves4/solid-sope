@@ -334,7 +334,16 @@ export default function Home() {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
-        getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
+        filenameSave = `${podPoliciesContainer}${filename}`
+        // getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
+        try {
+          // Save the SolidDataset
+          saveSolidDatasetAt(filenameSave,
+              newPolicy, { fetch: fetch });
+        } catch (error) {
+          console.log(error);
+        }
+        
       }
     })
   }

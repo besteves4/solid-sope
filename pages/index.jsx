@@ -39,7 +39,7 @@ async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
     policiesContainer, {
     fetch: fetch
   });
-
+  console.log(myDataset, newPolicy);
   const policyList = getContainedResourceUrlAll(myDataset);
   console.log(filename, policyList);
 

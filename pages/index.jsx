@@ -26,13 +26,13 @@ import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
   getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
-import { RDF, ACL, ODRL } from "@inrupt/vocab-common-rdf";
+import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";
 import Input from "./input.js";
 
 import personalData from "./personaldata.json";
-import purpose from "./purpose.json";
+import purpose from "./purposes.json";
 
 async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
   const myDataset = await getSolidDataset(

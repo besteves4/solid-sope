@@ -44,7 +44,7 @@ export default function Header() {
 
   return (
     <header className={bem("header-banner")}>
-      <div className={classes.logoContainer}>
+{/*       <div className={classes.logoContainer}>
         <Link href="/">
           <a data-testid={TESTCAFE_ID_HEADER_LOGO}>
             <img
@@ -55,7 +55,7 @@ export default function Header() {
             />
           </a>
         </Link>
-      </div>
+      </div> */}
 
       <div className={bem("header-banner__main-nav")} />
 

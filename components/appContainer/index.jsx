@@ -72,7 +72,7 @@ function AppContainer({ children }) {
               <Container>{children}</Container>
             </main>
 
-            <Footer />
+            {/* <Footer /> */}
 
             <div className={bem("app-layout__mobile-nav-push")} />
           </div>

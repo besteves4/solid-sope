@@ -348,7 +348,7 @@ export default function Home() {
       }
     })
   }
-  console.log(display);
+
   return (
     <div>
       {!session.info.isLoggedIn &&
@@ -406,6 +406,7 @@ export default function Home() {
               {/* <p><b>Generate policy:</b></p> */}
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
               {display && 
+              <div>
                 <pre>
                   @prefix odrl: &#60;http://www.w3.org/ns/odrl/2/&#62; .
                   @prefix oac: &#60;https://w3id.org/oac/&#62; .
@@ -425,6 +426,10 @@ export default function Home() {
                           ]
                       ] .
                 </pre>
+                <pre>{`
+                Hello   ,   
+                          World   .
+              `}</pre></div>
               }
             </div>
           </div>

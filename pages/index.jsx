@@ -402,7 +402,7 @@ export default function Home() {
               <Input ref={inputValue} />
             </div>
             <div class="bottom-container">
-              <p><b>Generate policy:</b></p>
+              {/* <p><b>Generate policy:</b></p> */}
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
             </div>
           </div>

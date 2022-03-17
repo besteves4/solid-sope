@@ -53,6 +53,7 @@ body,
 .container {
   height: auto;
   position: relative;
+  padding-left:80px;
 }
 
 .bottom-container {

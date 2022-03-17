@@ -61,11 +61,13 @@ body,
 }
 
 .left-col{
-  width:50%;
+  width:450px;
+  display: inline-block;
 }
 
 .right-col{
-  width:50%;
+  /* width:50%; */
+  display: inline-block;
 }
 
 .bottom-container {

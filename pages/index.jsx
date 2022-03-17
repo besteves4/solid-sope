@@ -365,15 +365,18 @@ export default function Home() {
         </div>
       }
       {session.info.isLoggedIn &&
+      <div>
         <div class="row">
-          <div class="left-col">
-            <div class="logged-in">
+          <div class="logged-in">
                 SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
                 to govern the access to Pod resources and to store them on your Pod.
                 Select the type of policy you want to model,
                 choose the types of personal data and purposes to which the policy applies,
                 generate the ODRL policy's RDF and save it in your Pod by clicking on the "Generate" button.
-            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="left-col">
             <div class="container">
               <div class="">
                 <p><b>Choose type of policy:</b></p>
@@ -432,7 +435,7 @@ export default function Home() {
             }
           </div>
         </div>        
-      }
+      </div>}
     </div>
   );
 }

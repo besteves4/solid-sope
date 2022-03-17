@@ -365,48 +365,52 @@ export default function Home() {
         </div>
       }
       {session.info.isLoggedIn &&
-        <div>
-          <div class="logged-in">
-              SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
-              to govern the access to Pod resources and to store them on your Pod.
-              Select the type of policy you want to model,
-              choose the types of personal data and purposes to which the policy applies,
-              generate the ODRL policy's RDF and save it in your Pod by clicking on the "Generate" button.
-          </div>
-          <div class="container">
-            <div class="">
-              <p><b>Choose type of policy:</b></p>
-              <Select styles={customStyles} id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
+        <div class="row">
+          <div class="col">
+            <div class="logged-in">
+                SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
+                to govern the access to Pod resources and to store them on your Pod.
+                Select the type of policy you want to model,
+                choose the types of personal data and purposes to which the policy applies,
+                generate the ODRL policy's RDF and save it in your Pod by clicking on the "Generate" button.
+            </div>
+            <div class="container">
+              <div class="">
+                <p><b>Choose type of policy:</b></p>
+                <Select styles={customStyles} id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
+              </div>
+            </div>
+            <div class="container">
+              <div class="">
+                <p><b>Choose type of personal data:</b></p>
+                <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
+              </div>
+            </div>
+            <div class="container">
+              <div class="">
+                <p><b>Choose purpose:</b></p>
+                <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
+              </div>
+            </div>
+            <div class="container">
+              <div class="">
+                <p><b>Choose applicable access modes:</b></p>
+                <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
+              </div>
+            </div>
+            <div class="container">
+              <div class="bottom-input">
+                <p><b>Save as:</b></p>
+                <Input ref={inputValue} />
+              </div>
+              <div class="bottom-container">
+                <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
+              </div>
             </div>
           </div>
-          <div class="container">
-            <div class="">
-              <p><b>Choose type of personal data:</b></p>
-              <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
-            </div>
-          </div>
-          <div class="container">
-            <div class="">
-              <p><b>Choose purpose:</b></p>
-              <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
-            </div>
-          </div>
-          <div class="container">
-            <div class="">
-              <p><b>Choose applicable access modes:</b></p>
-              <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
-            </div>
-          </div>
-          <div class="container">
-            <div class="bottom-input">
-              <p><b>Save as:</b></p>
-              <Input ref={inputValue} />
-            </div>
-            <div class="bottom-container">
-              {/* <p><b>Generate policy:</b></p> */}
-              <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
-              {display && 
-                <pre>{`
+          <div class="col">
+            {display && 
+              <pre>{`
                   @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
                   @prefix oac: <https://w3id.org/oac/> .
                   @prefix dpv: <http://www.w3.org/ns/dpv#> .
@@ -425,8 +429,7 @@ export default function Home() {
                           ]
                       ] .
                 `}</pre>
-              }
-            </div>
+            }
           </div>
         </div>        
       }

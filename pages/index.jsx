@@ -398,7 +398,7 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-            <div class="">
+            <div class="bottom-input">
               <p><b>Save as:</b></p>
               <Input ref={inputValue} />
             </div>
@@ -410,9 +410,9 @@ export default function Home() {
                   @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
                   @prefix oac: <https://w3id.org/oac/> .
                   @prefix dpv: <http://www.w3.org/ns/dpv#> .
-                  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>; .
+                  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-                  <https://pod.inrupt.com/besteves/private/odrl_policies/finForServiceProv#policy1>;
+                  <https://pod.inrupt.com/besteves/private/odrl_policies/finForServiceProv#policy1>
                       rdf:type odrl:Policy ;
                       odrl:permission [
                           odrl:assigner  <https://pod.inrupt.com/besteves/profile/card#me> ;

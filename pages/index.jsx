@@ -419,7 +419,7 @@ export default function Home() {
                   @prefix dpv: <http://www.w3.org/ns/dpv#> .
                   @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-                  <https://pod.inrupt.com/besteves/private/odrl_policies/finForServiceProv#policy1>
+                  <https://pod.inrupt.com/besteves/private/odrl_policies/policyFinancialService#policy1>
                       rdf:type odrl:Policy ;
                       odrl:permission [
                           odrl:assigner  <https://pod.inrupt.com/besteves/profile/card#me> ;

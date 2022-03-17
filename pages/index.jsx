@@ -366,7 +366,7 @@ export default function Home() {
       }
       {session.info.isLoggedIn &&
         <div class="row">
-          <div class="col-md-6">
+          <div class="left-col">
             <div class="logged-in">
                 SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
                 to govern the access to Pod resources and to store them on your Pod.
@@ -408,7 +408,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="right-col">
             {display && 
               <pre>{`
                   @prefix odrl: <http://www.w3.org/ns/odrl/2/> .

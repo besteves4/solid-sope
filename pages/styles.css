@@ -56,6 +56,10 @@ body,
   padding-left:80px;
 }
 
+.bottom-input {
+  padding-bottom:20px;
+}
+
 .bottom-container {
   padding-bottom:100px;
 }

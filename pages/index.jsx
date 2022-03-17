@@ -348,7 +348,7 @@ export default function Home() {
       }
     })
   }
-
+  console.log(display);
   return (
     <div>
       {!session.info.isLoggedIn &&
@@ -405,7 +405,7 @@ export default function Home() {
             <div class="bottom-container">
               {/* <p><b>Generate policy:</b></p> */}
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
-              {display}
+              {display && <p>Saved!</p>}
             </div>
           </div>
         </div>        

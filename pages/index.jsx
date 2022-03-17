@@ -405,7 +405,27 @@ export default function Home() {
             <div class="bottom-container">
               {/* <p><b>Generate policy:</b></p> */}
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
-              {display && <p>Saved!</p>}
+              {display && 
+                <pre>
+                  @prefix odrl: &#60;http://www.w3.org/ns/odrl/2/&#62; .
+                  @prefix oac: &#60;https://w3id.org/oac/&#62; .
+                  @prefix dpv: &#60;http://www.w3.org/ns/dpv#&#62; .
+                  @prefix rdf: &#60;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#62; .
+
+                  &#60;https://pod.inrupt.com/besteves/private/odrl_policies/finForServiceProv#policy1&#62;
+                      rdf:type odrl:Policy ;
+                      odrl:permission [
+                          odrl:assigner  &#60;https://pod.inrupt.com/besteves/profile/card#me&#62; ;
+                          odrl:action  oac:Read ;
+                          odrl:target  oac:Financial ;
+                          odrl:constraint [
+                              odrl:leftOperand oac:Purpose ;
+                              odrl:operator odrl:isA ;
+                              odrl:rightOperand dpv:ServiceProvision
+                          ]
+                      ] .
+                </pre>
+              }
             </div>
           </div>
         </div>        

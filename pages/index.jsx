@@ -30,7 +30,6 @@ import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";
 import Input from "./input.js";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
@@ -366,8 +365,8 @@ export default function Home() {
         </div>
       }
       {session.info.isLoggedIn &&
-        <div className="row">
-          <div className="col">
+        <div class="row">
+          <div class="col-md-6">
             <div class="logged-in">
                 SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
                 to govern the access to Pod resources and to store them on your Pod.
@@ -409,7 +408,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="col">
+          <div class="col-md-6">
             {display && 
               <pre>{`
                   @prefix odrl: <http://www.w3.org/ns/odrl/2/> .

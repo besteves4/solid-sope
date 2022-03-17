@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
@@ -275,6 +275,7 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
+  const [display, setDisplay] = useState(false);
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
   const generatePolicy = () => {
@@ -338,8 +339,8 @@ export default function Home() {
         // getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
         try {
           // Save the SolidDataset
-          saveSolidDatasetAt(filenameSave,
-              newPolicy, { fetch: fetch });
+          saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
+          setDisplay(true);
         } catch (error) {
           console.log(error);
         }
@@ -404,6 +405,7 @@ export default function Home() {
             <div class="bottom-container">
               {/* <p><b>Generate policy:</b></p> */}
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
+              {display}
             </div>
           </div>
         </div>        

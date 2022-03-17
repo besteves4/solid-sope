@@ -407,15 +407,15 @@ export default function Home() {
               <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
               {display && 
                 <pre>{`
-                  @prefix odrl: &#60;http://www.w3.org/ns/odrl/2/&#62; .
-                  @prefix oac: &#60;https://w3id.org/oac/&#62; .
-                  @prefix dpv: &#60;http://www.w3.org/ns/dpv#&#62; .
-                  @prefix rdf: &#60;http://www.w3.org/1999/02/22-rdf-syntax-ns#&#62; .
+                  @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+                  @prefix oac: <https://w3id.org/oac/> .
+                  @prefix dpv: <http://www.w3.org/ns/dpv#> .
+                  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>; .
 
-                  &#60;https://pod.inrupt.com/besteves/private/odrl_policies/finForServiceProv#policy1&#62;
+                  <https://pod.inrupt.com/besteves/private/odrl_policies/finForServiceProv#policy1>;
                       rdf:type odrl:Policy ;
                       odrl:permission [
-                          odrl:assigner  &#60;https://pod.inrupt.com/besteves/profile/card#me&#62; ;
+                          odrl:assigner  <https://pod.inrupt.com/besteves/profile/card#me> ;
                           odrl:action  oac:Read ;
                           odrl:target  oac:Financial ;
                           odrl:constraint [

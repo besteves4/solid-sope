@@ -274,6 +274,7 @@ export default function Home() {
   };
 
   const [display, setDisplay] = useState(false);
+  const [arr, setArr] = useState([]);
   let filenameSave = '';
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
@@ -343,9 +344,8 @@ export default function Home() {
               try {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
                 console.log(newPolicy);
-                const newPolicyRDF = toRdfJsDataset(newPolicy);
-                console.log(newPolicyRDF);
                 setDisplay(true);
+                setArr(selectedAccess);
               } catch (error) {
                 console.log(error);
               }
@@ -438,7 +438,7 @@ export default function Home() {
                       rdf:type odrl:Policy ;
                       odrl:permission [
                           odrl:assigner  <${session.info.webId}> ;
-                          odrl:action  oac:${selectedAccess} ;
+                          odrl:action  oac:${arr} ;
                           odrl:target  oac:Financial ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;

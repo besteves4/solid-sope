@@ -274,6 +274,7 @@ export default function Home() {
   };
 
   const [display, setDisplay] = useState(false);
+  let filenameSave = '';
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
   const generatePolicy = () => {
@@ -333,7 +334,8 @@ export default function Home() {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
-        const filenameSave = `${podPoliciesContainer}${filename}`;
+        filenameSave = `${podPoliciesContainer}${filename}`;
+        // const filenameSave = `${podPoliciesContainer}${filename}`;
         getPolicyFilenames(podPoliciesContainer).then(policyList => {
           if(policyList.includes(filenameSave)){
             alert("There is already a policy with that name, choose another");
@@ -429,7 +431,7 @@ export default function Home() {
                   @prefix dpv: <http://www.w3.org/ns/dpv#> .
                   @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-                  <https://pod.inrupt.com/besteves/private/odrl_policies/policyFinancialService#policy1>
+                  <${filenameSave}>
                       rdf:type odrl:Policy ;
                       odrl:permission [
                           odrl:assigner  <${session.info.webId}> ;

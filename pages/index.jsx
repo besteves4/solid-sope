@@ -422,7 +422,7 @@ export default function Home() {
                   <https://pod.inrupt.com/besteves/private/odrl_policies/policyFinancialService#policy1>
                       rdf:type odrl:Policy ;
                       odrl:permission [
-                          odrl:assigner  <https://pod.inrupt.com/besteves/profile/card#me> ;
+                          odrl:assigner  <${session.info.webId}> ;
                           odrl:action  oac:Read ;
                           odrl:target  oac:Financial ;
                           odrl:constraint [

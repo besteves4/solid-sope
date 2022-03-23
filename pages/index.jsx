@@ -34,26 +34,24 @@ import Input from "./input.js";
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
 
-async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
-  const myDataset = await getSolidDataset(
-    policiesContainer, {
-    fetch: fetch
-  });
-  console.log(myDataset, newPolicy);
+// async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
+async function getPolicyFilenames(policiesContainer) {
+  const myDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
+  
   const policyList = getContainedResourceUrlAll(myDataset);
-  console.log(filename, policyList);
+  return(policyList)
 
-  const filenameSave = `${policiesContainer}${filename}`;
+/*  const filenameSave = `${policiesContainer}${filename}`;
   if(policyList.includes(filenameSave)){
     alert("There is already a policy with that name, choose another");
   } else {
-    try {
+     try {
       await saveSolidDatasetAt(filenameSave,
         newPolicy, { fetch: fetch });
     } catch (error) {
       console.log(error);
     }
-  }
+  } */
 }
 
 export default function Home() {
@@ -336,14 +334,26 @@ export default function Home() {
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
         const filenameSave = `${podPoliciesContainer}${filename}`;
+        getPolicyFilenames(podPoliciesContainer).then(policyList => {
+          if(policyList.includes(filenameSave)){
+            alert("There is already a policy with that name, choose another");
+          } else {
+              try {
+                saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
+                setDisplay(true);
+              } catch (error) {
+                console.log(error);
+              }
+          }
+        })
         // getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
-        try {
+/*         try {
           // Save the SolidDataset
           saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
           setDisplay(true);
         } catch (error) {
           console.log(error);
-        }
+        } */
         
       }
     })

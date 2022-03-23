@@ -263,18 +263,14 @@ export default function Home() {
     { "label": "Write" },
     { "label": "Append" }
   ]
-  // let selectedAccess = []
-  const [selectedAccess, setSelectedAccess] = useState([]);
+  let selectedAccess = []
   const handleAccess = (currentNode, selectedNodes) => {
-    let selected = []
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      // selectedAccess.push(label);
-      selected.push(label);
+      selectedAccess.push(label);
     }
-    setSelectedAccess(selected);
-    console.log(selected);
+    console.log(selectedAccess);
   };
 
   const [display, setDisplay] = useState(false);
@@ -439,7 +435,7 @@ export default function Home() {
                       rdf:type odrl:Policy ;
                       odrl:permission [
                           odrl:assigner  <${session.info.webId}> ;
-                          odrl:action  oac:${selectedAccess} ;
+                          odrl:action  oac:Read ;
                           odrl:target  oac:Financial ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;

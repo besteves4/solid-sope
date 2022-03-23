@@ -230,7 +230,9 @@ export default function Home() {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      selectedPD.push(label);
+      if(!selectedPD.includes(label)){
+        selectedPD.push(label);
+      }
     }
     console.log(selectedPD);
   };
@@ -240,7 +242,9 @@ export default function Home() {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      selectedPurpose.push(label);
+      if(!selectedPurpose.includes(label)){
+        selectedPurpose.push(label);
+      }
     }
     console.log(selectedPurpose);
   };
@@ -264,6 +268,7 @@ export default function Home() {
 
   const [display, setDisplay] = useState(false);
   const [displayAccess, setDisplayAccess] = useState([]);
+  const [displayPD, setDisplayPD] = useState([]);
   let filenameSave = '';
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
@@ -332,6 +337,7 @@ export default function Home() {
               try {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
                 setDisplayAccess(selectedAccess);
+                setDisplayPD(selectedPD)
                 setDisplay(true);
               } catch (error) {
                 console.log(error);
@@ -417,7 +423,7 @@ export default function Home() {
                       odrl:permission [
                           odrl:assigner  <${session.info.webId}> ;
                           odrl:action  oac:${displayAccess} ;
-                          odrl:target  oac:Financial ;
+                          odrl:target  oac:${displayPD} ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;
                               odrl:operator odrl:isA ;

@@ -435,7 +435,7 @@ export default function Home() {
                       rdf:type odrl:Policy ;
                       odrl:permission [
                           odrl:assigner  <${session.info.webId}> ;
-                          odrl:action  oac:Read ;
+                          odrl:action  oac:${selectedAccess} ;
                           odrl:target  oac:Financial ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;

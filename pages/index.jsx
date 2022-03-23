@@ -309,11 +309,11 @@ export default function Home() {
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
     // purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
 
-    let purposeOperator = ''
+    let purposeOperator = '';
     if(selectedPurpose.length > 1){
-      purposeOperator = `${odrl}isAnyOf`;
+      purposeOperator = ODRL.isAnyOf;
     } else {
-      purposeOperator = `${odrl}isA`;
+      purposeOperator = ODRL.isA;
     }
     purposeConstraint = addUrl(purposeConstraint, ODRL.operator, purposeOperator);
 

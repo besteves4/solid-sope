@@ -255,7 +255,9 @@ export default function Home() {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      selectedAccess.push(label);
+      if(!selectedAccess.includes(label)){
+        selectedAccess.push(label);
+      }
     }
     console.log(selectedAccess);
   };

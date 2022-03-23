@@ -309,20 +309,18 @@ export default function Home() {
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
     // purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
 
+    let purposeOperator = ''
     if(selectedPurpose.length > 1){
-      purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isAnyOf)
-      for (var i = 0; i < selectedPurpose.length; i++) {
-        var purp = selectedPurpose[i];
-        purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
-      }
+      purposeOperator = `${odrl}isAnyOf`;
     } else {
-      purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
-      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${selectedPurpose[0]}`);
+      purposeOperator = `${odrl}isA`;
     }
-/*     for (var i = 0; i < selectedPurpose.length; i++) {
+    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, purposeOperator);
+
+    for (var i = 0; i < selectedPurpose.length; i++) {
       var purp = selectedPurpose[i];
       purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
-    } */
+    }
 
     newPolicy = setThing(newPolicy, purposeConstraint);
 

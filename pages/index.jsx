@@ -25,7 +25,7 @@ import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
+  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, toRdfJsDataset } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";
@@ -342,6 +342,9 @@ export default function Home() {
           } else {
               try {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
+                console.log(newPolicy);
+                const newPolicyRDF = toRdfJsDataset(newPolicy);
+                console.log(newPolicyRDF);
                 setDisplay(true);
               } catch (error) {
                 console.log(error);

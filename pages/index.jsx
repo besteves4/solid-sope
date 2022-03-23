@@ -271,6 +271,7 @@ export default function Home() {
   const [displayAccess, setDisplayAccess] = useState([]);
   const [displayPD, setDisplayPD] = useState([]);
   const [displayPurposeOperator, setDisplayPurposeOperator] = useState();
+  const [displayPurpose, setDisplayPurpose] = useState([]);
   let filenameSave = '';
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
@@ -350,6 +351,7 @@ export default function Home() {
                 setDisplayAccess(selectedAccess);
                 setDisplayPD(selectedPD);
                 setDisplayPurposeOperator(purposeOperator.split("/").pop());
+                setDisplayPurpose(selectedPurpose);
                 setDisplay(true);
               } catch (error) {
                 console.log(error);
@@ -439,7 +441,7 @@ export default function Home() {
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;
                               odrl:operator odrl:${displayPurposeOperator} ;
-                              odrl:rightOperand dpv:ServiceProvision
+                              odrl:rightOperand dpv:${displayPurpose}
                           ]
                       ] .
                 `}</pre>

@@ -25,7 +25,7 @@ import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, toRdfJsDataset } from "@inrupt/solid-client";
+  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 import * as d3 from "d3";
@@ -34,24 +34,11 @@ import Input from "./input.js";
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
 
-// async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
 async function getPolicyFilenames(policiesContainer) {
   const myDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
   
   const policyList = getContainedResourceUrlAll(myDataset);
   return(policyList)
-
-/*  const filenameSave = `${policiesContainer}${filename}`;
-  if(policyList.includes(filenameSave)){
-    alert("There is already a policy with that name, choose another");
-  } else {
-     try {
-      await saveSolidDatasetAt(filenameSave,
-        newPolicy, { fetch: fetch });
-    } catch (error) {
-      console.log(error);
-    }
-  } */
 }
 
 export default function Home() {
@@ -336,30 +323,19 @@ export default function Home() {
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
         filenameSave = `${podPoliciesContainer}${filename}`;
-        // const filenameSave = `${podPoliciesContainer}${filename}`;
         getPolicyFilenames(podPoliciesContainer).then(policyList => {
           if(policyList.includes(filenameSave)){
             alert("There is already a policy with that name, choose another");
           } else {
               try {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
-                console.log(newPolicy);
-                setDisplay(true);
                 setArr(selectedAccess);
+                setDisplay(true);
               } catch (error) {
                 console.log(error);
               }
           }
         })
-        // getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
-/*         try {
-          // Save the SolidDataset
-          saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
-          setDisplay(true);
-        } catch (error) {
-          console.log(error);
-        } */
-        
       }
     })
   }

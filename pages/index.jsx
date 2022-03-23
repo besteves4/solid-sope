@@ -270,6 +270,7 @@ export default function Home() {
   const [displayPolicyType, setDisplayPolicyType] = useState('');
   const [displayAccess, setDisplayAccess] = useState([]);
   const [displayPD, setDisplayPD] = useState([]);
+  const [displayPurposeOperator, setDisplayPurposeOperator] = useState();
   let filenameSave = '';
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
@@ -347,7 +348,8 @@ export default function Home() {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
                 setDisplayPolicyType(chosenPolicy);
                 setDisplayAccess(selectedAccess);
-                setDisplayPD(selectedPD)
+                setDisplayPD(selectedPD);
+                setDisplayPurposeOperator(purposeOperator);
                 setDisplay(true);
               } catch (error) {
                 console.log(error);
@@ -436,7 +438,7 @@ export default function Home() {
                           odrl:target  oac:${displayPD} ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;
-                              odrl:operator odrl:isA ;
+                              odrl:operator odrl:${displayPurposeOperator} ;
                               odrl:rightOperand dpv:ServiceProvision
                           ]
                       ] .

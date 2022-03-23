@@ -267,6 +267,7 @@ export default function Home() {
   };
 
   const [display, setDisplay] = useState(false);
+  const [displayPolicyType, setDisplayPolicyType] = useState('');
   const [displayAccess, setDisplayAccess] = useState([]);
   const [displayPD, setDisplayPD] = useState([]);
   let filenameSave = '';
@@ -336,6 +337,7 @@ export default function Home() {
           } else {
               try {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
+                setDisplayPolicyType(chosenPolicy);
                 setDisplayAccess(selectedAccess);
                 setDisplayPD(selectedPD)
                 setDisplay(true);
@@ -420,7 +422,7 @@ export default function Home() {
 
                   <${filenameSave}>
                       rdf:type odrl:Policy ;
-                      odrl:permission [
+                      odrl:${displayPolicyType} [
                           odrl:assigner  <${session.info.webId}> ;
                           odrl:action  oac:${displayAccess} ;
                           odrl:target  oac:${displayPD} ;

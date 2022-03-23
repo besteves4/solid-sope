@@ -435,9 +435,9 @@ export default function Home() {
                   <${filenameSave}>
                       rdf:type odrl:Policy ;
                       odrl:${displayPolicyType} [
-                          odrl:assigner  <${session.info.webId}> ;
-                          odrl:action  oac:${displayAccess} ;
-                          odrl:target  oac:${displayPD} ;
+                          odrl:assigner <${session.info.webId}> ;
+                          odrl:action oac:${displayAccess} ;
+                          odrl:target oac:${displayPD} ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;
                               odrl:operator odrl:${displayPurposeOperator} ;

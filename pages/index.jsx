@@ -348,10 +348,10 @@ export default function Home() {
               try {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
                 setDisplayPolicyType(chosenPolicy);
-                setDisplayAccess(selectedAccess);
-                setDisplayPD(selectedPD);
+                setDisplayAccess(selectedAccess.map(a => `oac:${a}`));
+                setDisplayPD(selectedPD.map(pd => `oac:${pd}`));
                 setDisplayPurposeOperator(purposeOperator.split("/").pop());
-                setDisplayPurpose(selectedPurpose);
+                setDisplayPurpose(selectedPurpose.map(p => `dpv:${p}`));
                 setDisplay(true);
               } catch (error) {
                 console.log(error);
@@ -436,12 +436,12 @@ export default function Home() {
                       rdf:type odrl:Policy ;
                       odrl:${displayPolicyType} [
                           odrl:assigner <${session.info.webId}> ;
-                          odrl:action oac:${displayAccess} ;
-                          odrl:target oac:${displayPD} ;
+                          odrl:action ${displayAccess} ;
+                          odrl:target ${displayPD} ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;
                               odrl:operator odrl:${displayPurposeOperator} ;
-                              odrl:rightOperand dpv:${displayPurpose}
+                              odrl:rightOperand ${displayPurpose}
                           ]
                       ] .
                 `}</pre>

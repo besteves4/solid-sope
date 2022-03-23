@@ -307,12 +307,22 @@ export default function Home() {
     newPolicy = setThing(newPolicy, policyType);
 
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
-    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
+    // purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
 
-    for (var i = 0; i < selectedPurpose.length; i++) {
+    if(selectedPurpose.length > 1){
+      purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isAnyOf)
+      for (var i = 0; i < selectedPurpose.length; i++) {
+        var purp = selectedPurpose[i];
+        purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
+      }
+    } else {
+      purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
+      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${selectedPurpose[0]}`);
+    }
+/*     for (var i = 0; i < selectedPurpose.length; i++) {
       var purp = selectedPurpose[i];
       purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
-    }
+    } */
 
     newPolicy = setThing(newPolicy, purposeConstraint);
 

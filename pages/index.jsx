@@ -349,7 +349,7 @@ export default function Home() {
                 setDisplayPolicyType(chosenPolicy);
                 setDisplayAccess(selectedAccess);
                 setDisplayPD(selectedPD);
-                setDisplayPurposeOperator(purposeOperator);
+                setDisplayPurposeOperator(purposeOperator.split("/").pop());
                 setDisplay(true);
               } catch (error) {
                 console.log(error);

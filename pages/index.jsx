@@ -34,26 +34,11 @@ import Input from "./input.js";
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
 
-async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
-  const myDataset = await getSolidDataset(
-    policiesContainer, {
-    fetch: fetch
-  });
-  console.log(myDataset, newPolicy);
+async function getPolicyFilenames(policiesContainer) {
+  const myDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
+  
   const policyList = getContainedResourceUrlAll(myDataset);
-  console.log(filename, policyList);
-
-  const filenameSave = `${policiesContainer}${filename}`;
-  if(policyList.includes(filenameSave)){
-    alert("There is already a policy with that name, choose another");
-  } else {
-    try {
-      await saveSolidDatasetAt(filenameSave,
-        newPolicy, { fetch: fetch });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  return(policyList)
 }
 
 export default function Home() {
@@ -245,7 +230,9 @@ export default function Home() {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      selectedPD.push(label);
+      if(!selectedPD.includes(label)){
+        selectedPD.push(label);
+      }
     }
     console.log(selectedPD);
   };
@@ -255,7 +242,9 @@ export default function Home() {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      selectedPurpose.push(label);
+      if(!selectedPurpose.includes(label)){
+        selectedPurpose.push(label);
+      }
     }
     console.log(selectedPurpose);
   };
@@ -270,12 +259,20 @@ export default function Home() {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      selectedAccess.push(label);
+      if(!selectedAccess.includes(label)){
+        selectedAccess.push(label);
+      }
     }
     console.log(selectedAccess);
   };
 
   const [display, setDisplay] = useState(false);
+  const [displayPolicyType, setDisplayPolicyType] = useState('');
+  const [displayAccess, setDisplayAccess] = useState([]);
+  const [displayPD, setDisplayPD] = useState([]);
+  const [displayPurposeOperator, setDisplayPurposeOperator] = useState();
+  const [displayPurpose, setDisplayPurpose] = useState([]);
+  let filenameSave = '';
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
   const generatePolicy = () => {
@@ -312,10 +309,17 @@ export default function Home() {
     newPolicy = setThing(newPolicy, policyType);
 
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
-    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
+
+    let purposeOperator = '';
+    if(selectedPurpose.length > 1){
+      purposeOperator = ODRL.isAnyOf;
+    } else {
+      purposeOperator = ODRL.isA;
+    }
+    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, purposeOperator);
 
     for (var i = 0; i < selectedPurpose.length; i++) {
-      var purp = selectedPurpose[i];
+      var purp = selectedPurpose[i].replace(' ', '');
       purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
     }
 
@@ -335,16 +339,24 @@ export default function Home() {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
-        const filenameSave = `${podPoliciesContainer}${filename}`;
-        // getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
-        try {
-          // Save the SolidDataset
-          saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
-          setDisplay(true);
-        } catch (error) {
-          console.log(error);
-        }
-        
+        filenameSave = `${podPoliciesContainer}${filename}`;
+        getPolicyFilenames(podPoliciesContainer).then(policyList => {
+          if(policyList.includes(filenameSave)){
+            alert("There is already a policy with that name, choose another");
+          } else {
+              try {
+                saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
+                setDisplayPolicyType(chosenPolicy);
+                setDisplayAccess(selectedAccess.map(a => `oac:${a}`));
+                setDisplayPD(selectedPD.map(pd => `oac:${pd}`));
+                setDisplayPurposeOperator(purposeOperator.split("/").pop());
+                setDisplayPurpose(selectedPurpose.map(p => `dpv:${p}`));
+                setDisplay(true);
+              } catch (error) {
+                console.log(error);
+              }
+          }
+        })
       }
     })
   }
@@ -419,16 +431,16 @@ export default function Home() {
                   @prefix dpv: <http://www.w3.org/ns/dpv#> .
                   @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-                  <https://pod.inrupt.com/besteves/private/odrl_policies/policyFinancialService#policy1>
+                  <${filenameSave}>
                       rdf:type odrl:Policy ;
-                      odrl:permission [
-                          odrl:assigner  <https://pod.inrupt.com/besteves/profile/card#me> ;
-                          odrl:action  oac:Read ;
-                          odrl:target  oac:Financial ;
+                      odrl:${displayPolicyType} [
+                          odrl:assigner <${session.info.webId}> ;
+                          odrl:action ${displayAccess} ;
+                          odrl:target ${displayPD} ;
                           odrl:constraint [
                               odrl:leftOperand oac:Purpose ;
-                              odrl:operator odrl:isA ;
-                              odrl:rightOperand dpv:ServiceProvision
+                              odrl:operator odrl:${displayPurposeOperator} ;
+                              odrl:rightOperand ${displayPurpose}
                           ]
                       ] .
                 `}</pre>

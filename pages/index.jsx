@@ -350,7 +350,7 @@ export default function Home() {
                 setDisplayAccess(selectedAccess.map(a => `oac:${a}`));
                 setDisplayPD(selectedPD.map(pd => `oac:${pd}`));
                 setDisplayPurposeOperator(purposeOperator.split("/").pop());
-                setDisplayPurpose(selectedPurpose.map(p => `dpv:${p}`));
+                setDisplayPurpose(selectedPurpose.map(p => `dpv:${p.replace(' ', '')}`));
                 setDisplay(true);
               } catch (error) {
                 console.log(error);

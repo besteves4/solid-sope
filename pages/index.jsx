@@ -309,7 +309,6 @@ export default function Home() {
     newPolicy = setThing(newPolicy, policyType);
 
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
-    // purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
 
     let purposeOperator = '';
     if(selectedPurpose.length > 1){
@@ -320,7 +319,7 @@ export default function Home() {
     purposeConstraint = addUrl(purposeConstraint, ODRL.operator, purposeOperator);
 
     for (var i = 0; i < selectedPurpose.length; i++) {
-      var purp = selectedPurpose[i];
+      var purp = selectedPurpose[i].replace(' ', '');
       purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
     }
 

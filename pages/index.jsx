@@ -268,6 +268,7 @@ export default function Home() {
 
   const [display, setDisplay] = useState(false);
   const [displayPolicyType, setDisplayPolicyType] = useState('');
+  const [displayResource, setDisplayResource] = useState('');
   const [displayAccess, setDisplayAccess] = useState([]);
   const [displayPD, setDisplayPD] = useState([]);
   const [displayPurposeOperator, setDisplayPurposeOperator] = useState();
@@ -347,6 +348,7 @@ export default function Home() {
               try {
                 saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
                 setDisplayPolicyType(chosenPolicy);
+                setDisplayResource(filenameSave);
                 setDisplayAccess(selectedAccess.map(a => `oac:${a}`));
                 setDisplayPD(selectedPD.map(pd => `oac:${pd}`));
                 setDisplayPurposeOperator(purposeOperator.split("/").pop());
@@ -431,7 +433,7 @@ export default function Home() {
                   @prefix dpv: <http://www.w3.org/ns/dpv#> .
                   @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-                  <${filenameSave}>
+                  <${displayResource}>
                       rdf:type odrl:Policy ;
                       odrl:${displayPolicyType} [
                           odrl:assigner <${session.info.webId}> ;

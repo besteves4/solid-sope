@@ -267,13 +267,12 @@ export default function Home() {
   };
 
   const [display, setDisplay] = useState(false);
-  const [displayPolicyType, setDisplayPolicyType] = useState('');
   const [displayResource, setDisplayResource] = useState('');
+  const [displayPolicyType, setDisplayPolicyType] = useState('');
   const [displayAccess, setDisplayAccess] = useState([]);
   const [displayPD, setDisplayPD] = useState([]);
   const [displayPurposeOperator, setDisplayPurposeOperator] = useState();
   const [displayPurpose, setDisplayPurpose] = useState([]);
-  let filenameSave = '';
   const inputValue = useRef();
   const generatePolicyBtn = useRef();
   const generatePolicy = () => {
@@ -340,7 +339,7 @@ export default function Home() {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = inputValue.current.state.value;
-        filenameSave = `${podPoliciesContainer}${filename}`;
+        const filenameSave = `${podPoliciesContainer}${filename}`;
         getPolicyFilenames(podPoliciesContainer).then(policyList => {
           if(policyList.includes(filenameSave)){
             alert("There is already a policy with that name, choose another");
@@ -435,6 +434,7 @@ export default function Home() {
 
                   <${displayResource}>
                       rdf:type odrl:Policy ;
+                      odrl:profile oac: ;
                       odrl:${displayPolicyType} [
                           odrl:assigner <${session.info.webId}> ;
                           odrl:action ${displayAccess} ;

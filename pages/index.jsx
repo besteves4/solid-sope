@@ -18,8 +18,8 @@ import { fetch } from "@inrupt/solid-client-authn-browser";
 // import * as d3 from "d3";
 import Input from "./input.js";
 
-import personalData from "./personaldata.json";
-import purpose from "./purposes.json";
+import personalData from "../data/personaldata.json";
+import purpose from "../data/purposes.json";
 
 async function getPolicyFilenames(policiesContainer) {
   const myDataset = await getSolidDataset(policiesContainer, { fetch: fetch });

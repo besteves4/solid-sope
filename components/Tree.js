@@ -9,19 +9,19 @@ const debugData = [
         name: "Query",
         children: [
           {
-            name: "gameProducts"
+            name: "gameProducts",
           },
           {
             name: "game",
             children: [
               {
-                name: "id"
+                name: "id",
               },
               {
-                name: "description"
+                name: "description",
               },
               {
-                name: "slug"
+                name: "slug",
               },
               {
                 name: "products",
@@ -30,26 +30,26 @@ const debugData = [
                     name: "items",
                     children: [
                       {
-                        name: "id"
+                        name: "id",
                       },
                       {
-                        name: "name"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                        name: "name",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const containerStyles = {
   width: "100%",
-  height: "100vh"
+  height: "100vh",
 };
 
 const svgSquare = {
@@ -59,8 +59,8 @@ const svgSquare = {
     height: 20,
     x: -10,
     y: -10,
-    fill: 'red',
-  }
+    fill: "red",
+  },
 };
 
 export default class CenteredTree extends React.PureComponent {
@@ -71,12 +71,12 @@ export default class CenteredTree extends React.PureComponent {
     this.setState({
       translate: {
         x: dimensions.width / 10,
-        y: dimensions.width / 3
-      }
+        y: dimensions.width / 3,
+      },
     });
   }
 
-  handleClick(nodeData, event){
+  handleClick(nodeData, event) {
     console.log(nodeData.data.name);
     console.log(nodeData, event);
   }
@@ -92,7 +92,7 @@ export default class CenteredTree extends React.PureComponent {
           rootNodeClassName="node__root"
           branchNodeClassName="node__branch"
           leafNodeClassName="node__leaf"
-          onNodeClick = {this.handleClick.bind(this)}
+          onNodeClick={this.handleClick.bind(this)}
         />
       </div>
     );

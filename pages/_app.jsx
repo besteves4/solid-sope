@@ -19,26 +19,20 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { useEffect } from "react";
-import AppContainer from "../components/appContainer";
+import { SessionProvider } from "@inrupt/solid-ui-react";
 
 import "./styles.css";
 
 /* eslint react/prop-types: 0, react/jsx-props-no-spreading: 0 */
 function MyApp({ Component, pageProps }) {
-  // Remove injected serverside JSS
-  useEffect(() => {
-    const jssStyles = document.querySelector("#jss-server-side");
-
-    if (jssStyles && jssStyles.parentElement) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
-
   return (
-    <AppContainer>
+    <SessionProvider
+      sessionId="session-provider-example"
+      onError={console.log}
+      restorePreviousSession
+    >
       <Component {...pageProps} />
-    </AppContainer>
+    </SessionProvider>
   );
 }
 

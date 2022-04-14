@@ -1,8 +1,14 @@
-import React, { useRef, useState } from "react";
-import Select from "react-select";
-import DropdownTreeSelect from "react-dropdown-tree-select";
+import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
-import { Button } from "@inrupt/prism-react-components";
+import DropdownTreeSelect from "react-dropdown-tree-select";
+
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+
 import {
   createSolidDataset,
   createThing,
@@ -16,7 +22,6 @@ import {
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 // import * as d3 from "d3";
-import Input from "./input.js";
 
 import personalData from "../data/personaldata.json";
 import purpose from "../data/purposes.json";
@@ -28,8 +33,16 @@ async function getPolicyFilenames(policiesContainer) {
   return policyList;
 }
 
+const policyTypes = [
+  { value: "permission", label: "Permission" },
+  { value: "prohibition", label: "Prohibition" },
+];
+
 export default function Home() {
   const { session } = useSession();
+
+  const [chosenPolicy, setChosenPolicy] = useState(policyTypes[0].value);
+  const [policyFilename, setPolicyFilename] = useState("example-policy.ttl");
 
   // d3 tree diagram from https://bl.ocks.org/d3noob/8375092
   /* const treeData = [
@@ -184,21 +197,6 @@ export default function Home() {
 
   d3.select(self.frameElement).style("height", "500px"); */
 
-  let chosenPolicy = "";
-  const policyTypes = [
-    { value: "permission", label: "Permission" },
-    { value: "prohibition", label: "Prohibition" },
-  ];
-  const handlePolicyType = (selectedOption) => {
-    chosenPolicy = selectedOption.value;
-  };
-  const customStyles = {
-    container: (provided) => ({
-      ...provided,
-      width: 200,
-    }),
-  };
-
   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach((k) => {
       const node = obj[k];
@@ -256,8 +254,7 @@ export default function Home() {
   const [displayPD, setDisplayPD] = useState([]);
   const [displayPurposeOperator, setDisplayPurposeOperator] = useState();
   const [displayPurpose, setDisplayPurpose] = useState([]);
-  const inputValue = useRef();
-  const generatePolicyBtn = useRef();
+
   const generatePolicy = () => {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
     let newPolicy = createSolidDataset();
@@ -328,7 +325,8 @@ export default function Home() {
       } else {
         const podRoot = response[0];
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
-        const filename = inputValue.current.state.value;
+        const filename = policyFilename;
+
         const filenameSave = `${podPoliciesContainer}${filename}`;
         getPolicyFilenames(podPoliciesContainer).then((policyList) => {
           if (policyList.includes(filenameSave)) {
@@ -403,13 +401,28 @@ export default function Home() {
                   <p>
                     <b>Choose type of policy:</b>
                   </p>
-                  <Select
-                    styles={customStyles}
-                    id="policyType"
-                    label="Policy Type"
-                    options={policyTypes}
-                    onChange={handlePolicyType}
-                  ></Select>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      id="policy-type-label"
+                      htmlFor="policy-type-select"
+                    >
+                      Policy Type
+                    </InputLabel>
+                    <Select
+                      size="small"
+                      labelId="policy-type-label"
+                      id="policy-type-select"
+                      label="Policy Type"
+                      onChange={(ev) => setChosenPolicy(ev.target.value)}
+                      value={chosenPolicy}
+                    >
+                      {policyTypes.map((policy) => (
+                        <MenuItem key={policy.value} value={policy.value}>
+                          {policy.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
               <div className="container">
@@ -453,14 +466,17 @@ export default function Home() {
                   <p>
                     <b>Save as:</b>
                   </p>
-                  <Input ref={inputValue} />
+                  <TextField
+                    size="small"
+                    onChange={(ev) => setPolicyFilename(ev.target.value)}
+                    value={policyFilename}
+                  />
                 </div>
                 <div className="bottom-container">
                   <Button
                     variant="small"
                     value="permission"
                     onClick={generatePolicy}
-                    ref={generatePolicyBtn}
                   >
                     Generate
                   </Button>

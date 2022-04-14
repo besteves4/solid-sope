@@ -1,9 +1,8 @@
 import { SessionProvider } from "@inrupt/solid-ui-react";
 
-import "./styles.css";
+import "../styles/app.css";
 
-/* eslint react/prop-types: 0, react/jsx-props-no-spreading: 0 */
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <SessionProvider
       sessionId="session-provider-example"
@@ -15,4 +14,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default App;

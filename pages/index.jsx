@@ -197,6 +197,7 @@ export default function Home() {
 
   d3.select(self.frameElement).style("height", "500px"); */
 
+  // TODO: Move to src/utils.js or something:
   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach((k) => {
       const node = obj[k];
@@ -207,6 +208,7 @@ export default function Home() {
     });
   };
 
+  // TODO: Only run this once, these don't need to be part of the render loop and will slow your application:
   assignObjectPaths(personalData);
   assignObjectPaths(purpose);
 
@@ -234,7 +236,11 @@ export default function Home() {
     console.log(selectedPurpose);
   };
 
+  // TODO: lift up, see what I did with policyTypes
   const access = [{ label: "Read" }, { label: "Write" }, { label: "Append" }];
+
+  // You may wish to use a useState or useReducer for this:
+  // https://dev.to/colocodes/2-use-cases-of-the-usereducer-reactjs-hook-ine
   let selectedAccess = [];
   const handleAccess = (currentNode, selectedNodes) => {
     for (var i = 0; i < selectedNodes.length; i++) {
@@ -324,10 +330,13 @@ export default function Home() {
         alert("Choose the access modes applicable to the policy");
       } else {
         const podRoot = response[0];
+        // FIXME: use proper URL construction via `new URL(path, base);`
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = policyFilename;
 
+        // FIXME: use proper URL construction via `new URL(path, base);`
         const filenameSave = `${podPoliciesContainer}${filename}`;
+
         getPolicyFilenames(podPoliciesContainer).then((policyList) => {
           if (policyList.includes(filenameSave)) {
             alert("There is already a policy with that name, choose another");

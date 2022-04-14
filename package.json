@@ -18,6 +18,8 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@inrupt/solid-client": "^1.21.0",
+    "@inrupt/solid-client-authn-browser": "^1.11.7",
     "@inrupt/solid-ui-react": "^2.7.0",
     "@inrupt/vocab-common-rdf": "^1.0.3",
     "@mui/material": "^5.6.1",

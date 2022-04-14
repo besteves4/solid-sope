@@ -39,7 +39,7 @@ const policyTypes = [
 ];
 
 export default function Home() {
-  const { session } = useSession();
+  const { session, sessionRequestInProgress } = useSession();
 
   const [chosenPolicy, setChosenPolicy] = useState(policyTypes[0].value);
   const [policyFilename, setPolicyFilename] = useState("example-policy.ttl");
@@ -360,6 +360,10 @@ export default function Home() {
       }
     });
   };
+
+  if (sessionRequestInProgress) {
+    return null;
+  }
 
   return (
     <div>

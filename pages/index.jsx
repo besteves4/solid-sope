@@ -1,48 +1,48 @@
-/**
- * Copyright 2021 Inrupt Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
- * Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
- * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
- * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-import React, {useRef, useState} from 'react';
-import Select from 'react-select';
-import DropdownTreeSelect from "react-dropdown-tree-select";
+import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
-import { Button } from "@inrupt/prism-react-components";
-import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
+import DropdownTreeSelect from "react-dropdown-tree-select";
+
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+
+import {
+  createSolidDataset,
+  createThing,
+  setThing,
+  addUrl,
+  saveSolidDatasetAt,
+  getPodUrlAll,
+  getSolidDataset,
+  getContainedResourceUrlAll,
+} from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
-import * as d3 from "d3";
-import Input from "./input.js";
+// import * as d3 from "d3";
 
-import personalData from "./personaldata.json";
-import purpose from "./purposes.json";
+import personalData from "../data/personaldata.json";
+import purpose from "../data/purposes.json";
 
 async function getPolicyFilenames(policiesContainer) {
   const myDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
-  
+
   const policyList = getContainedResourceUrlAll(myDataset);
-  return(policyList)
+  return policyList;
 }
 
+const policyTypes = [
+  { value: "permission", label: "Permission" },
+  { value: "prohibition", label: "Prohibition" },
+];
+
 export default function Home() {
-  const { session } = useSession();
+  const { session, sessionRequestInProgress } = useSession();
+
+  const [chosenPolicy, setChosenPolicy] = useState(policyTypes[0].value);
+  const [policyFilename, setPolicyFilename] = useState("example-policy.ttl");
 
   // d3 tree diagram from https://bl.ocks.org/d3noob/8375092
   /* const treeData = [
@@ -197,23 +197,9 @@ export default function Home() {
 
   d3.select(self.frameElement).style("height", "500px"); */
 
-  let chosenPolicy = ''
-  const policyTypes = [
-    { value: 'permission', label: 'Permission' },
-    { value: 'prohibition', label: 'Prohibition' }
-  ]
-  const handlePolicyType = (selectedOption) => {
-    chosenPolicy = selectedOption.value;
-  }
-  const customStyles = {
-    container: provided => ({
-      ...provided,
-      width: 200
-    })
-  };
-  
+  // TODO: Move to src/utils.js or something:
   const assignObjectPaths = (obj, stack) => {
-    Object.keys(obj).forEach(k => {
+    Object.keys(obj).forEach((k) => {
       const node = obj[k];
       if (typeof node === "object") {
         node.path = stack ? `${stack}.${k}` : k;
@@ -222,44 +208,45 @@ export default function Home() {
     });
   };
 
+  // TODO: Only run this once, these don't need to be part of the render loop and will slow your application:
   assignObjectPaths(personalData);
   assignObjectPaths(purpose);
 
-  let selectedPD = []
+  let selectedPD = [];
   const handlePersonalData = (currentNode, selectedNodes) => {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      if(!selectedPD.includes(label)){
+      if (!selectedPD.includes(label)) {
         selectedPD.push(label);
       }
     }
     console.log(selectedPD);
   };
 
-  let selectedPurpose = []
+  let selectedPurpose = [];
   const handlePurpose = (currentNode, selectedNodes) => {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      if(!selectedPurpose.includes(label)){
+      if (!selectedPurpose.includes(label)) {
         selectedPurpose.push(label);
       }
     }
     console.log(selectedPurpose);
   };
 
-  const access = [
-    { "label": "Read" },
-    { "label": "Write" },
-    { "label": "Append" }
-  ]
-  let selectedAccess = []
+  // TODO: lift up, see what I did with policyTypes
+  const access = [{ label: "Read" }, { label: "Write" }, { label: "Append" }];
+
+  // You may wish to use a useState or useReducer for this:
+  // https://dev.to/colocodes/2-use-cases-of-the-usereducer-reactjs-hook-ine
+  let selectedAccess = [];
   const handleAccess = (currentNode, selectedNodes) => {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
-      if(!selectedAccess.includes(label)){
+      if (!selectedAccess.includes(label)) {
         selectedAccess.push(label);
       }
     }
@@ -267,14 +254,13 @@ export default function Home() {
   };
 
   const [display, setDisplay] = useState(false);
-  const [displayResource, setDisplayResource] = useState('');
-  const [displayPolicyType, setDisplayPolicyType] = useState('');
+  const [displayResource, setDisplayResource] = useState("");
+  const [displayPolicyType, setDisplayPolicyType] = useState("");
   const [displayAccess, setDisplayAccess] = useState([]);
   const [displayPD, setDisplayPD] = useState([]);
   const [displayPurposeOperator, setDisplayPurposeOperator] = useState();
   const [displayPurpose, setDisplayPurpose] = useState([]);
-  const inputValue = useRef();
-  const generatePolicyBtn = useRef();
+
   const generatePolicy = () => {
     // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
     let newPolicy = createSolidDataset();
@@ -286,20 +272,20 @@ export default function Home() {
     const oacPurpose = `${oac}Purpose`;
     const odrlPolicyType = `${odrl}${chosenPolicy}`;
 
-    let policy = createThing({name: "policy1"});
-    let policyType = createThing({name: chosenPolicy+"1"});
+    let policy = createThing({ name: "policy1" });
+    let policyType = createThing({ name: chosenPolicy + "1" });
     policy = addUrl(policy, RDF.type, ODRL.Policy);
     policy = addUrl(policy, odrlPolicyType, policyType);
     newPolicy = setThing(newPolicy, policy);
 
-    let purposeConstraint = createThing({name: "purposeConstraint"});
+    let purposeConstraint = createThing({ name: "purposeConstraint" });
 
-    for (var i = 0; i < selectedPD.length; i++) {
+    for (let i = 0; i < selectedPD.length; i++) {
       var pd = selectedPD[i];
       policyType = addUrl(policyType, ODRL.target, `${oac}${pd}`);
     }
 
-    for (var i = 0; i < selectedAccess.length; i++) {
+    for (let i = 0; i < selectedAccess.length; i++) {
       var acc = selectedAccess[i];
       policyType = addUrl(policyType, ODRL.action, `${oac}${acc}`);
     }
@@ -310,23 +296,30 @@ export default function Home() {
 
     purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
 
-    let purposeOperator = '';
-    if(selectedPurpose.length > 1){
+    let purposeOperator = "";
+    if (selectedPurpose.length > 1) {
       purposeOperator = ODRL.isAnyOf;
     } else {
       purposeOperator = ODRL.isA;
     }
-    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, purposeOperator);
+    purposeConstraint = addUrl(
+      purposeConstraint,
+      ODRL.operator,
+      purposeOperator
+    );
 
-    for (var i = 0; i < selectedPurpose.length; i++) {
-      var purp = selectedPurpose[i].replace(' ', '');
-      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
+    for (var p = 0; p < selectedPurpose.length; p++) {
+      var purp = selectedPurpose[p].replace(" ", "");
+      purposeConstraint = addUrl(
+        purposeConstraint,
+        ODRL.rightOperand,
+        `${dpv}${purp}`
+      );
     }
 
     newPolicy = setThing(newPolicy, purposeConstraint);
 
-    getPodUrlAll(session.info.webId).then(response => {
-
+    getPodUrlAll(session.info.webId).then((response) => {
       if (chosenPolicy === "") {
         alert("Choose a type of policy");
       } else if (selectedPD.length < 1) {
@@ -337,96 +330,175 @@ export default function Home() {
         alert("Choose the access modes applicable to the policy");
       } else {
         const podRoot = response[0];
+        // FIXME: use proper URL construction via `new URL(path, base);`
         const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
-        const filename = inputValue.current.state.value;
+        const filename = policyFilename;
+
+        // FIXME: use proper URL construction via `new URL(path, base);`
         const filenameSave = `${podPoliciesContainer}${filename}`;
-        getPolicyFilenames(podPoliciesContainer).then(policyList => {
-          if(policyList.includes(filenameSave)){
+
+        getPolicyFilenames(podPoliciesContainer).then((policyList) => {
+          if (policyList.includes(filenameSave)) {
             alert("There is already a policy with that name, choose another");
           } else {
-              try {
-                saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
-                setDisplayPolicyType(chosenPolicy);
-                setDisplayResource(filenameSave);
-                setDisplayAccess(selectedAccess.map(a => `oac:${a}`));
-                setDisplayPD(selectedPD.map(pd => `oac:${pd}`));
-                setDisplayPurposeOperator(purposeOperator.split("/").pop());
-                setDisplayPurpose(selectedPurpose.map(p => `dpv:${p.replace(' ', '')}`));
-                setDisplay(true);
-              } catch (error) {
-                console.log(error);
-              }
+            try {
+              saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
+              setDisplayPolicyType(chosenPolicy);
+              setDisplayResource(filenameSave);
+              setDisplayAccess(selectedAccess.map((a) => `oac:${a}`));
+              setDisplayPD(selectedPD.map((pd) => `oac:${pd}`));
+              setDisplayPurposeOperator(purposeOperator.split("/").pop());
+              setDisplayPurpose(
+                selectedPurpose.map((p) => `dpv:${p.replace(" ", "")}`)
+              );
+              setDisplay(true);
+            } catch (error) {
+              console.log(error);
+            }
           }
-        })
+        });
       }
-    })
+    });
+  };
+
+  if (sessionRequestInProgress) {
+    return null;
   }
 
   return (
     <div>
-      {!session.info.isLoggedIn &&
-        <div class="logged-out">
-          <p>SOAP is a Solid ODRL Access Policies editor for users of Solid apps.</p>
+      {!session.info.isLoggedIn && (
+        <div className="logged-out">
           <p>
-            It allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
-            to govern the access to Pod resources and to store them on your Pod.
+            SOAP is a Solid ODRL Access Policies editor for users of Solid apps.
           </p>
-          <p>To get started, log in to your Pod and select the type of policy you want to model.</p>
-          <p>Next, you can choose the types of personal data and purposes to which the policy applies.</p>
-          <p>Finally, you can generate the ODRL policy's RDF by clicking the "Generate" button and save it in your Pod.</p>
-          <p><a href='mailto:beatriz.gesteves@upm.es'>Contact Me</a></p>
+          <p>
+            It allows you to define ODRL policies, based on the{" "}
+            <a href="https://w3id.org/oac/">OAC specification</a>, to govern the
+            access to Pod resources and to store them on your Pod.
+          </p>
+          <p>
+            To get started, log in to your Pod and select the type of policy you
+            want to model.
+          </p>
+          <p>
+            Next, you can choose the types of personal data and purposes to
+            which the policy applies.
+          </p>
+          <p>
+            Finally, you can generate the ODRL policy&apos;s RDF by clicking the
+            &quot;Generate&quot; button and save it in your Pod.
+          </p>
+          <p>
+            <a href="mailto:beatriz.gesteves@upm.es">Contact Me</a>
+          </p>
         </div>
-      }
-      {session.info.isLoggedIn &&
-      <div>
-        <div class="row">
-          <div class="logged-in">
-                SOAP allows you to define ODRL policies, based on the <a href='https://w3id.org/oac/'>OAC specification</a>,
-                to govern the access to Pod resources and to store them on your Pod.
-                Select the type of policy you want to model,
-                choose the types of personal data and purposes to which the policy applies,
-                generate the ODRL policy's RDF and save it in your Pod by clicking on the "Generate" button.
-          </div>
-        </div>
-        <div class="row">
-          <div class="left-col">
-            <div class="container">
-              <div class="">
-                <p><b>Choose type of policy:</b></p>
-                <Select styles={customStyles} id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
-              </div>
-            </div>
-            <div class="container">
-              <div class="">
-                <p><b>Choose type of personal data:</b></p>
-                <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
-              </div>
-            </div>
-            <div class="container">
-              <div class="">
-                <p><b>Choose purpose:</b></p>
-                <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
-              </div>
-            </div>
-            <div class="container">
-              <div class="">
-                <p><b>Choose applicable access modes:</b></p>
-                <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
-              </div>
-            </div>
-            <div class="container">
-              <div class="bottom-input">
-                <p><b>Save as:</b></p>
-                <Input ref={inputValue} />
-              </div>
-              <div class="bottom-container">
-                <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
-              </div>
+      )}
+      {session.info.isLoggedIn && (
+        <div>
+          <div className="row">
+            <div className="logged-in">
+              SOAP allows you to define ODRL policies, based on the{" "}
+              <a href="https://w3id.org/oac/">OAC specification</a>, to govern
+              the access to Pod resources and to store them on your Pod. Select
+              the type of policy you want to model, choose the types of personal
+              data and purposes to which the policy applies, generate the ODRL
+              policy&apos;s RDF and save it in your Pod by clicking on the
+              &quot;Generate&quot; button.
             </div>
           </div>
-          <div class="right-col">
-            {display && 
-              <pre>{`
+          <div className="row">
+            <div className="left-col">
+              <div className="container">
+                <div className="">
+                  <p>
+                    <b>Choose type of policy:</b>
+                  </p>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      id="policy-type-label"
+                      htmlFor="policy-type-select"
+                    >
+                      Policy Type
+                    </InputLabel>
+                    <Select
+                      size="small"
+                      labelId="policy-type-label"
+                      id="policy-type-select"
+                      label="Policy Type"
+                      onChange={(ev) => setChosenPolicy(ev.target.value)}
+                      value={chosenPolicy}
+                    >
+                      {policyTypes.map((policy) => (
+                        <MenuItem key={policy.value} value={policy.value}>
+                          {policy.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <div className="container">
+                <div className="">
+                  <p>
+                    <b>Choose type of personal data:</b>
+                  </p>
+                  <DropdownTreeSelect
+                    data={personalData}
+                    onChange={handlePersonalData}
+                    className="tree-select"
+                  />
+                </div>
+              </div>
+              <div className="container">
+                <div className="">
+                  <p>
+                    <b>Choose purpose:</b>
+                  </p>
+                  <DropdownTreeSelect
+                    data={purpose}
+                    onChange={handlePurpose}
+                    className="tree-select"
+                  />
+                </div>
+              </div>
+              <div className="container">
+                <div className="">
+                  <p>
+                    <b>Choose applicable access modes:</b>
+                  </p>
+                  <DropdownTreeSelect
+                    data={access}
+                    onChange={handleAccess}
+                    className="tree-select"
+                  />
+                </div>
+              </div>
+              <div className="container">
+                <div className="bottom-input">
+                  <p>
+                    <b>Save as:</b>
+                  </p>
+                  <TextField
+                    size="small"
+                    onChange={(ev) => setPolicyFilename(ev.target.value)}
+                    value={policyFilename}
+                  />
+                </div>
+                <div className="bottom-container">
+                  <Button
+                    variant="small"
+                    value="permission"
+                    onClick={generatePolicy}
+                  >
+                    Generate
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="right-col">
+              {display && (
+                <pre>{`
                   @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
                   @prefix oac: <https://w3id.org/oac/> .
                   @prefix dpv: <http://www.w3.org/ns/dpv#> .
@@ -446,10 +518,11 @@ export default function Home() {
                           ]
                       ] .
                 `}</pre>
-            }
+              )}
+            </div>
           </div>
-        </div>        
-      </div>}
+        </div>
+      )}
     </div>
   );
 }

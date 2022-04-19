@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import DropdownTreeSelect from "react-dropdown-tree-select";
+import CenteredTree from "../components/Tree";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -215,6 +216,7 @@ export default function Home() {
     <div>
       {!session.info.isLoggedIn && (
         <div className="logged-out">
+          {/* <CenteredTree /> */}
           <p>
             SOAP is a Solid ODRL Access Policies editor for users of Solid apps.
           </p>

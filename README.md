@@ -1,4 +1,4 @@
-# Solid ODRL Access Policies editor
+# SOPE - Solid ODRL access control Policies Editor
 
 This is a [Next.js](https://nextjs.org/) Web app generated with [`Inrupt's demo template`](https://github.com/inrupt/template-web-demo).
 

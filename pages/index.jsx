@@ -218,7 +218,7 @@ export default function Home() {
         <div className="logged-out">
           {/* <CenteredTree /> */}
           <p>
-            SOAP is a Solid ODRL Access Policies editor for users of Solid apps.
+            SOPE is a Solid ODRL access control Policies Editor for users of Solid apps.
           </p>
           <p>
             It allows you to define ODRL policies, based on the{" "}
@@ -246,7 +246,7 @@ export default function Home() {
         <div>
           <div className="row">
             <div className="logged-in">
-              SOAP allows you to define ODRL policies, based on the{" "}
+              SOPE allows you to define ODRL policies, based on the{" "}
               <a href="https://w3id.org/oac/">OAC specification</a>, to govern
               the access to Pod resources and to store them on your Pod. Select
               the type of policy you want to model, choose the types of personal
@@ -325,7 +325,7 @@ export default function Home() {
               <div className="container">
                 <div className="bottom-input">
                   <p>
-                    <b>Save as:</b>
+                    <b>Policy name:</b>
                   </p>
                   <TextField
                     size="small"
@@ -347,10 +347,10 @@ export default function Home() {
             <div className="right-col">
               {display && (
                 <pre>{`
-                  @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
-                  @prefix oac: <https://w3id.org/oac/> .
-                  @prefix dpv: <http://www.w3.org/ns/dpv#> .
-                  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+                  PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+                  PREFIX oac: <https://w3id.org/oac/>
+                  PREFIX dpv: <http://www.w3.org/ns/dpv#>
+                  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
                   <${displayResource}>
                       rdf:type odrl:Policy ;

@@ -156,7 +156,7 @@ export default function Home() {
     );
 
     for (var p = 0; p < selectedPurpose.length; p++) {
-      var purp = selectedPurpose[p].replace(" ", "");
+      var purp = selectedPurpose[p].replaceAll(" ", "");
       purposeConstraint = addUrl(
         purposeConstraint,
         ODRL.rightOperand,
@@ -196,7 +196,7 @@ export default function Home() {
               setDisplayPD(selectedPD.map((pd) => `oac:${pd}`));
               setDisplayPurposeOperator(purposeOperator.split("/").pop());
               setDisplayPurpose(
-                selectedPurpose.map((p) => `dpv:${p.replace(" ", "")}`)
+                selectedPurpose.map((p) => `dpv:${p.replaceAll(" ", "")}`)
               );
               setDisplay(true);
             } catch (error) {

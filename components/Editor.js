@@ -44,14 +44,8 @@ const policyTypes = [
   { value: "prohibition", label: "Prohibition" },
 ];
 
-export default function Home() {
+export function Editor() {
   const { session, sessionRequestInProgress } = useSession();
-
-  const [value, setValue] = useState('1');
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const [chosenPolicy, setChosenPolicy] = useState(policyTypes[0].value);
   const [policyFilename, setPolicyFilename] = useState("example-policy.ttl");
@@ -225,178 +219,132 @@ export default function Home() {
   }
 
   return (
-    <div>
-      {!session.info.isLoggedIn && (
-        <div className="logged-out">
-          {/* <CenteredTree /> */}
-          <p>
-            SOPE is a Solid ODRL access control Policies Editor for users of Solid apps.
-          </p>
-          <p>
-            It allows you to define ODRL policies, based on the{" "}
-            <a href="https://w3id.org/oac/">OAC specification</a>, to govern the
-            access to Pod resources and to store them on your Pod.
-          </p>
-          <p>
-            To get started, log in to your Pod and select the type of policy you
-            want to model.
-          </p>
-          <p>
-            Next, you can choose the types of personal data and purposes to
-            which the policy applies.
-          </p>
-          <p>
-            Finally, you can generate the ODRL policy&apos;s RDF by clicking the
-            &quot;Generate&quot; button and save it in your Pod.
-          </p>
-          <p>
-            <a href="mailto:beatriz.gesteves@upm.es">Contact Me</a>
-          </p>
-        </div>
-      )}
-      {session.info.isLoggedIn && (
         <div>
-          <div className="row">
-            <div className="logged-in">
-              SOPE allows you to define ODRL policies, based on the{" "}
-              <a href="https://w3id.org/oac/">OAC specification</a>, to govern
-              the access to Pod resources and to store them on your Pod. Select
-              the type of policy you want to model, choose the types of personal
-              data and purposes to which the policy applies, generate the ODRL
-              policy&apos;s RDF and save it in your Pod by clicking on the
-              &quot;Generate&quot; button.
-            </div>
-          </div>
           <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
-                  <Tab label="Item One" value="1" />
-                  <Tab label="Item Two" value="2" />
-                  <Tab label="Item Three" value="3" />
+                  <Tab label="Editor" value="1" />
                 </TabList>
               </Box>
-              <TabPanel value="1">Item One</TabPanel>
-              <TabPanel value="2">Item Two</TabPanel>
-              <TabPanel value="3">Item Three</TabPanel>
+              <TabPanel value="1">
+                <div className="row">
+                  <div className="left-col">
+                    <div className="container">
+                      <div className="">
+                        <p>
+                          <b>Choose type of policy:</b>
+                        </p>
+                        <FormControl fullWidth>
+                          <InputLabel
+                            id="policy-type-label"
+                            htmlFor="policy-type-select"
+                          >
+                            Policy Type
+                          </InputLabel>
+                          <Select
+                            size="small"
+                            labelId="policy-type-label"
+                            id="policy-type-select"
+                            label="Policy Type"
+                            onChange={(ev) => setChosenPolicy(ev.target.value)}
+                            value={chosenPolicy}
+                          >
+                            {policyTypes.map((policy) => (
+                              <MenuItem key={policy.value} value={policy.value}>
+                                {policy.label}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div className="container">
+                      <div className="">
+                        <p>
+                          <b>Choose type of personal data:</b>
+                        </p>
+                        <DropdownTreeSelect
+                          data={personalData}
+                          onChange={handlePersonalData}
+                          className="tree-select"
+                        />
+                      </div>
+                    </div>
+                    <div className="container">
+                      <div className="">
+                        <p>
+                          <b>Choose purpose:</b>
+                        </p>
+                        <DropdownTreeSelect
+                          data={purpose}
+                          onChange={handlePurpose}
+                          className="tree-select"
+                        />
+                      </div>
+                    </div>
+                    <div className="container">
+                      <div className="">
+                        <p>
+                          <b>Choose applicable access modes:</b>
+                        </p>
+                        <DropdownTreeSelect
+                          data={access}
+                          onChange={handleAccess}
+                          className="tree-select"
+                        />
+                      </div>
+                    </div>
+                    <div className="container">
+                      <div className="bottom-input">
+                        <p>
+                          <b>Policy name:</b>
+                        </p>
+                        <TextField
+                          size="small"
+                          onChange={(ev) => setPolicyFilename(ev.target.value)}
+                          value={policyFilename}
+                        />
+                      </div>
+                      <div className="bottom-container">
+                        <Button
+                          variant="small"
+                          value="permission"
+                          onClick={generatePolicy}
+                        >
+                          Generate
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="right-col">
+                    {display && (
+                      <pre>{`
+                        PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+                        PREFIX oac: <https://w3id.org/oac/>
+                        PREFIX dpv: <http://www.w3.org/ns/dpv#>
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+                        <${displayResource}>
+                            rdf:type odrl:Policy ;
+                            odrl:profile oac: ;
+                            odrl:${displayPolicyType} [
+                                odrl:assigner <${session.info.webId}> ;
+                                odrl:action ${displayAccess} ;
+                                odrl:target ${displayPD} ;
+                                odrl:constraint [
+                                    odrl:leftOperand oac:Purpose ;
+                                    odrl:operator odrl:${displayPurposeOperator} ;
+                                    odrl:rightOperand ${displayPurpose}
+                                ]
+                            ] .
+                      `}</pre>
+                    )}
+                  </div>
+                </div>
+              </TabPanel>
             </TabContext>
           </Box>
-          <div className="row">
-            <div className="left-col">
-              <div className="container">
-                <div className="">
-                  <p>
-                    <b>Choose type of policy:</b>
-                  </p>
-                  <FormControl fullWidth>
-                    <InputLabel
-                      id="policy-type-label"
-                      htmlFor="policy-type-select"
-                    >
-                      Policy Type
-                    </InputLabel>
-                    <Select
-                      size="small"
-                      labelId="policy-type-label"
-                      id="policy-type-select"
-                      label="Policy Type"
-                      onChange={(ev) => setChosenPolicy(ev.target.value)}
-                      value={chosenPolicy}
-                    >
-                      {policyTypes.map((policy) => (
-                        <MenuItem key={policy.value} value={policy.value}>
-                          {policy.label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
-              </div>
-              <div className="container">
-                <div className="">
-                  <p>
-                    <b>Choose type of personal data:</b>
-                  </p>
-                  <DropdownTreeSelect
-                    data={personalData}
-                    onChange={handlePersonalData}
-                    className="tree-select"
-                  />
-                </div>
-              </div>
-              <div className="container">
-                <div className="">
-                  <p>
-                    <b>Choose purpose:</b>
-                  </p>
-                  <DropdownTreeSelect
-                    data={purpose}
-                    onChange={handlePurpose}
-                    className="tree-select"
-                  />
-                </div>
-              </div>
-              <div className="container">
-                <div className="">
-                  <p>
-                    <b>Choose applicable access modes:</b>
-                  </p>
-                  <DropdownTreeSelect
-                    data={access}
-                    onChange={handleAccess}
-                    className="tree-select"
-                  />
-                </div>
-              </div>
-              <div className="container">
-                <div className="bottom-input">
-                  <p>
-                    <b>Policy name:</b>
-                  </p>
-                  <TextField
-                    size="small"
-                    onChange={(ev) => setPolicyFilename(ev.target.value)}
-                    value={policyFilename}
-                  />
-                </div>
-                <div className="bottom-container">
-                  <Button
-                    variant="small"
-                    value="permission"
-                    onClick={generatePolicy}
-                  >
-                    Generate
-                  </Button>
-                </div>
-              </div>
-            </div>
-            <div className="right-col">
-              {display && (
-                <pre>{`
-                  PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
-                  PREFIX oac: <https://w3id.org/oac/>
-                  PREFIX dpv: <http://www.w3.org/ns/dpv#>
-                  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-
-                  <${displayResource}>
-                      rdf:type odrl:Policy ;
-                      odrl:profile oac: ;
-                      odrl:${displayPolicyType} [
-                          odrl:assigner <${session.info.webId}> ;
-                          odrl:action ${displayAccess} ;
-                          odrl:target ${displayPD} ;
-                          odrl:constraint [
-                              odrl:leftOperand oac:Purpose ;
-                              odrl:operator odrl:${displayPurposeOperator} ;
-                              odrl:rightOperand ${displayPurpose}
-                          ]
-                      ] .
-                `}</pre>
-              )}
-            </div>
-          </div>
         </div>
-      )}
-    </div>
-  );
+    );
 }

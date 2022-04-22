@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import CenteredTree from "../components/Tree";
-import Editor from "../components/Editor";
+import { Editor } from "../components/Editor";
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';

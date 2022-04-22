@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import DropdownTreeSelect from "react-dropdown-tree-select";
-import CenteredTree from "../components/Tree";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -9,12 +8,6 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 
 import {
   createSolidDataset,

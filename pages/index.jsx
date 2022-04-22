@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import CenteredTree from "../components/Tree";
 import { Editor } from "../components/Editor";
+import { PersonalData } from "../components/PersonalData";
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -70,10 +71,14 @@ export default function Home() {
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                   <Tab label="Editor" value="1" />
+                  <Tab label="Personal Data" value="2" />
                 </TabList>
               </Box>
               <TabPanel value="1">
                 <Editor />
+              </TabPanel>
+              <TabPanel value="2">
+                <PersonalData />
               </TabPanel>
             </TabContext>
           </Box>

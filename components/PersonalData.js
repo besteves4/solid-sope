@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
-import "./styles.css";
 import * as d3 from "d3";
 
 function ForceGraph({ nodes }) {

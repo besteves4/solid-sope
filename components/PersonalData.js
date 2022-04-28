@@ -7,10 +7,7 @@ function ForceGraph({ nodes }) {
 
   // re-create animation every time nodes change
   useEffect(() => {
-    const simulation = d3
-      .forceSimulation()
-      .force("x", d3.forceX(400))
-      .force("y", d3.forceY(300));
+    const simulation = d3.forceSimulation();
 
     // update state on every frame
     simulation.on("tick", () => {

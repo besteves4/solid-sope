@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import DropdownTreeSelect from "react-dropdown-tree-select";
+
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 import {
   createSolidDataset,
@@ -24,10 +30,6 @@ export function PersonalData() {
   }
 
   return (
-    <div className="row">
-        <DndProvider backend={HTML5Backend}>
-			{session.info.webId}
-		</DndProvider>
-    </div>
+    <div className="row">{session.info.webId}</div>
     );
 }

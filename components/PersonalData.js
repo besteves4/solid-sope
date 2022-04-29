@@ -1,5 +1,5 @@
 import { useSession } from "@inrupt/solid-ui-react";
-import ForceLayout from "ForceLayout";
+import ForceLayout from "./ForceLayout";
 
 export function PersonalData() {
   const { session, sessionRequestInProgress } = useSession();

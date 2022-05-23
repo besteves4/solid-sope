@@ -56,8 +56,8 @@ export default class ForceLayout extends React.PureComponent {
   render() {
     const { width, height } = this.props;
     const style = {
-      width,
-      height,
+      width: 400,
+      height: 330,
       border: '1px solid #323232',
     };
     

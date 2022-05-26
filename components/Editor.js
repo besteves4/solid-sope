@@ -177,11 +177,13 @@ export function Editor() {
       } else {
         const podRoot = response[0];
         // FIXME: use proper URL construction via `new URL(path, base);`
-        const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
+        const podPoliciesContainer = new URL("private/odrl_policies/", podRoot);
+        // const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = policyFilename;
 
         // FIXME: use proper URL construction via `new URL(path, base);`
-        const filenameSave = `${podPoliciesContainer}${filename}`;
+        // const filenameSave = `${podPoliciesContainer}${filename}`;
+        const filenameSave = new URL(filename, podPoliciesContainer);
 
         getPolicyFilenames(podPoliciesContainer).then((policyList) => {
           if (policyList.includes(filenameSave)) {

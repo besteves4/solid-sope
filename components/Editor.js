@@ -25,6 +25,11 @@ import { fetch } from "@inrupt/solid-client-authn-browser";
 import personalData from "../data/personaldata.json";
 import purpose from "../data/purposes.json";
 
+import assignObjectPaths from "../src/utils";
+
+assignObjectPaths(personalData);
+assignObjectPaths(purpose);
+
 async function getPolicyFilenames(policiesContainer) {
   console.log(policiesContainer);
   const myDataset = await getSolidDataset(policiesContainer.href, { fetch: fetch });
@@ -45,7 +50,7 @@ export function Editor() {
   const [policyFilename, setPolicyFilename] = useState("example-policy.ttl");
 
   // TODO: Move to src/utils.js or something:
-  const assignObjectPaths = (obj, stack) => {
+/*   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach((k) => {
       const node = obj[k];
       if (typeof node === "object") {
@@ -53,11 +58,11 @@ export function Editor() {
         assignObjectPaths(node, node.path);
       }
     });
-  };
+  }; */
 
   // TODO: Only run this once, these don't need to be part of the render loop and will slow your application:
-  assignObjectPaths(personalData);
-  assignObjectPaths(purpose);
+/*   assignObjectPaths(personalData);
+  assignObjectPaths(purpose); */
 
   let selectedPD = [];
   const handlePersonalData = (currentNode, selectedNodes) => {
@@ -177,13 +182,10 @@ export function Editor() {
         alert("Choose the access modes applicable to the policy");
       } else {
         const podRoot = response[0];
-        // FIXME: use proper URL construction via `new URL(path, base);`
-        const policiesContainer = "private/odrl_policies/"
+        const policiesContainer = "private/odrl_policies/";
         const podPoliciesContainer = new URL(policiesContainer, podRoot);
-        // const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
         const filename = policyFilename;
 
-        // FIXME: use proper URL construction via `new URL(path, base);`
         const filenameContainer = `${policiesContainer}${filename}`;
         const filenameSave = new URL(filenameContainer, podRoot);
 

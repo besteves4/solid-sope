@@ -22,13 +22,11 @@ import {
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
-import personalData from "../data/personaldata.json";
-import purpose from "../data/purposes.json";
+/* import personalData from "../data/personaldata.json";
+import purpose from "../data/purposes.json"; */
+import getPaths from "../src/utils";
 
-import assignObjectPaths from "../src/utils";
-
-assignObjectPaths(personalData);
-assignObjectPaths(purpose);
+const [personalData, purpose] = getPaths();
 
 async function getPolicyFilenames(policiesContainer) {
   console.log(policiesContainer);

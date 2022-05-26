@@ -1,4 +1,5 @@
-const assignObjectPaths = (obj, stack) => {
+export function assignObjectPaths(obj, stack) {
+// const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach((k) => {
       const node = obj[k];
       if (typeof node === "object") {

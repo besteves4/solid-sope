@@ -22,6 +22,8 @@ import {
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
+/* import personalData from "../data/personaldata.json";
+import purpose from "../data/purposes.json"; */
 import getPaths from "../src/utils";
 
 const [personalData, purpose] = getPaths();
@@ -39,15 +41,27 @@ const policyTypes = [
   { value: "prohibition", label: "Prohibition" },
 ];
 
-const access = [{ label: "Read" }, { label: "Write" }, { label: "Append" }];
-
 export function Editor() {
   const { session, sessionRequestInProgress } = useSession();
 
   const [chosenPolicy, setChosenPolicy] = useState(policyTypes[0].value);
-  const [selectedAccess, setSelectedAccess] = useState([]);
   const [policyFilename, setPolicyFilename] = useState("example-policy.ttl");
-  
+
+  // TODO: Move to src/utils.js or something:
+/*   const assignObjectPaths = (obj, stack) => {
+    Object.keys(obj).forEach((k) => {
+      const node = obj[k];
+      if (typeof node === "object") {
+        node.path = stack ? `${stack}.${k}` : k;
+        assignObjectPaths(node, node.path);
+      }
+    });
+  }; */
+
+  // TODO: Only run this once, these don't need to be part of the render loop and will slow your application:
+/*   assignObjectPaths(personalData);
+  assignObjectPaths(purpose); */
+
   let selectedPD = [];
   const handlePersonalData = (currentNode, selectedNodes) => {
     for (var i = 0; i < selectedNodes.length; i++) {
@@ -73,18 +87,17 @@ export function Editor() {
   };
 
   // TODO: lift up, see what I did with policyTypes
-  // const access = [{ label: "Read" }, { label: "Write" }, { label: "Append" }];
+  const access = [{ label: "Read" }, { label: "Write" }, { label: "Append" }];
 
   // You may wish to use a useState or useReducer for this:
   // https://dev.to/colocodes/2-use-cases-of-the-usereducer-reactjs-hook-ine
-  // let selectedAccess = [];
+  let selectedAccess = [];
   const handleAccess = (currentNode, selectedNodes) => {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
       var label = selectedNodes[i].label;
       if (!selectedAccess.includes(label)) {
-        // selectedAccess.push(label);
-        setSelectedAccess([...selectedAccess, label]);
+        selectedAccess.push(label);
       }
     }
     console.log(selectedAccess);

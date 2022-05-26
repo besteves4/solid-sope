@@ -192,9 +192,9 @@ export function Editor() {
             alert("There is already a policy with that name, choose another");
           } else {
             try {
-              saveSolidDatasetAt(filenameSave, newPolicy, { fetch: fetch });
+              saveSolidDatasetAt(filenameSave.href, newPolicy, { fetch: fetch });
               setDisplayPolicyType(chosenPolicy);
-              setDisplayResource(filenameSave);
+              setDisplayResource(filenameSave.href);
               setDisplayAccess(selectedAccess.map((a) => `oac:${a}`));
               setDisplayPD(selectedPD.map((pd) => `oac:${pd}`));
               setDisplayPurposeOperator(purposeOperator.split("/").pop());

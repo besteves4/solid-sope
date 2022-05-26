@@ -27,7 +27,7 @@ import purpose from "../data/purposes.json";
 
 async function getPolicyFilenames(policiesContainer) {
   console.log(policiesContainer);
-  const myDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
+  const myDataset = await getSolidDataset(policiesContainer.href, { fetch: fetch });
 
   const policyList = getContainedResourceUrlAll(myDataset);
   return policyList;

@@ -131,8 +131,8 @@ function Login() {
     login({
       oidcIssuer: oidcIssuer,
       clientName: config.demoTitle,
-      redirectUrl: "http://localhost:3003/",
-      clientId: "http://localhost:3003/myappid.jsonld"
+      /* redirectUrl: "http://localhost:3003/",
+      clientId: "http://localhost:3003/myappid.jsonld" */
     });
   };
 

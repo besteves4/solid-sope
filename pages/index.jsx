@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Editor } from "../components/Editor";
-import { PersonalData } from "../components/PersonalData";
 
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 
 export default function Home() {
   const { session, sessionRequestInProgress } = useSession();
 
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -27,7 +26,8 @@ export default function Home() {
       {!session.info.isLoggedIn && (
         <div className="logged-out">
           <p>
-            SOPE is a Solid ODRL access control Policies Editor for users of Solid apps.
+            SOPE is a Solid ODRL access control Policies Editor for users of
+            Solid apps.
           </p>
           <p>
             It allows you to define ODRL policies, based on the{" "}
@@ -64,10 +64,13 @@ export default function Home() {
               &quot;Generate&quot; button.
             </div>
           </div>
-          <Box sx={{ width: '100%', typography: 'body1' }}>
+          <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <TabList
+                  onChange={handleChange}
+                  aria-label="lab API tabs example"
+                >
                   <Tab label="Editor" value="1" />
                   {/* <Tab label="Personal Data" value="2" /> */}
                 </TabList>

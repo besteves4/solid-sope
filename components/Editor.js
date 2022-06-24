@@ -30,7 +30,9 @@ const [personalData, purpose] = getPaths();
 
 async function getPolicyFilenames(policiesContainer) {
   console.log(policiesContainer);
-  const myDataset = await getSolidDataset(policiesContainer.href, { fetch: fetch });
+  const myDataset = await getSolidDataset(policiesContainer.href, {
+    fetch: fetch,
+  });
 
   const policyList = getContainedResourceUrlAll(myDataset);
   return policyList;
@@ -48,7 +50,7 @@ export function Editor() {
   const [policyFilename, setPolicyFilename] = useState("example-policy.ttl");
 
   // TODO: Move to src/utils.js or something:
-/*   const assignObjectPaths = (obj, stack) => {
+  /*   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach((k) => {
       const node = obj[k];
       if (typeof node === "object") {
@@ -59,7 +61,7 @@ export function Editor() {
   }; */
 
   // TODO: Only run this once, these don't need to be part of the render loop and will slow your application:
-/*   assignObjectPaths(personalData);
+  /*   assignObjectPaths(personalData);
   assignObjectPaths(purpose); */
 
   let selectedPD = [];
@@ -192,7 +194,9 @@ export function Editor() {
             alert("There is already a policy with that name, choose another");
           } else {
             try {
-              saveSolidDatasetAt(filenameSave.href, newPolicy, { fetch: fetch });
+              saveSolidDatasetAt(filenameSave.href, newPolicy, {
+                fetch: fetch,
+              });
               setDisplayPolicyType(chosenPolicy);
               setDisplayResource(filenameSave.href);
               setDisplayAccess(selectedAccess.map((a) => `oac:${a}`));
@@ -224,10 +228,7 @@ export function Editor() {
               <b>Choose type of policy:</b>
             </p>
             <FormControl fullWidth>
-              <InputLabel
-                id="policy-type-label"
-                htmlFor="policy-type-select"
-              >
+              <InputLabel id="policy-type-label" htmlFor="policy-type-select">
                 Policy Type
               </InputLabel>
               <Select
@@ -295,11 +296,7 @@ export function Editor() {
             />
           </div>
           <div className="bottom-container">
-            <Button
-              variant="small"
-              value="permission"
-              onClick={generatePolicy}
-            >
+            <Button variant="small" value="permission" onClick={generatePolicy}>
               Generate
             </Button>
           </div>
@@ -330,5 +327,5 @@ export function Editor() {
         )}
       </div>
     </div>
-    );
+  );
 }

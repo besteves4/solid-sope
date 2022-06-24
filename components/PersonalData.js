@@ -1,9 +1,10 @@
 import { useSession } from "@inrupt/solid-ui-react";
 // import ForceLayout from "./ForceLayout";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
-const ForceLayout = dynamic(() => import("../components/ForceLayout"), 
-  { ssr: false });
+const ForceLayout = dynamic(() => import("../components/ForceLayout"), {
+  ssr: false,
+});
 
 export function PersonalData() {
   const { session, sessionRequestInProgress } = useSession();
@@ -20,5 +21,5 @@ export function PersonalData() {
         {/* <ForceLayout width={400} height={330} /> */}
       </div>
     </div>
-    );
+  );
 }

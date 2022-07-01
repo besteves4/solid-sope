@@ -4,64 +4,58 @@ import data from "../data/data.json";
 
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
-    const { width, height } = this.props;
+    var canvas = document.querySelector("canvas"),
+    context = canvas.getContext("2d"),
+    width = canvas.width,
+    height = canvas.height;
 
-    const force = d3.layout
-      .force()
-      .charge(-120)
-      .linkDistance(50)
-      .size([width, height])
-      .nodes(data.nodes)
-      .links(data.links);
+    var simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter());
 
-    const svg = d3
-      .select(this.refs.mountPoint)
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height);
+    d3.json(data, function(error, graph) {
+      if (error) throw error;
 
-    const link = svg
-      .selectAll("line")
-      .data(data.links)
-      .enter()
-      .append("line")
-      .style("stroke", "#999999")
-      .style("stroke-opacity", 0.6)
-      .style("stroke-width", (d) => Math.sqrt(d.value));
+      simulation
+          .nodes(graph.nodes)
+          .on("tick", ticked);
 
-    const color = d3.scale.category20();
-    const node = svg
-      .selectAll("circle")
-      .data(data.nodes)
-      .enter()
-      .append("circle")
-      .attr("r", 5)
-      .style("stroke", "#FFFFFF")
-      .style("stroke-width", 1.5)
-      .style("fill", (d) => color(d.group))
-      .call(force.drag);
+      simulation.force("link")
+          .links(graph.links);
 
-    force.on("tick", () => {
-      link
-        .attr("x1", (d) => d.source.x)
-        .attr("y1", (d) => d.source.y)
-        .attr("x2", (d) => d.target.x)
-        .attr("y2", (d) => d.target.y);
+      function ticked() {
+        context.clearRect(0, 0, width, height);
+        context.save();
+        context.translate(width / 2, height / 2 + 40);
 
-      node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+        context.beginPath();
+        graph.links.forEach(drawLink);
+        context.strokeStyle = "#aaa";
+        context.stroke();
+
+        context.beginPath();
+        graph.nodes.forEach(drawNode);
+        context.fill();
+        context.strokeStyle = "#fff";
+        context.stroke();
+
+        context.restore();
+      }
     });
 
-    force.start();
+    function drawLink(d) {
+      context.moveTo(d.source.x, d.source.y);
+      context.lineTo(d.target.x, d.target.y);
+    }
+
+    function drawNode(d) {
+      context.moveTo(d.x + 3, d.y);
+      context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
+    }
   }
 
   render() {
-    const { width, height } = this.props;
-    const style = {
-      width: 400,
-      height: 330,
-      border: "1px solid #323232",
-    };
-
-    return <div style={style} ref="mountPoint" />;
+    return <canvas width="960" height="500"></canvas>;
   }
 }

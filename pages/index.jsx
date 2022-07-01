@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Editor } from "../components/Editor";
+import { PersonalData } from "../components/PersonalData";
 
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -72,15 +73,15 @@ export default function Home() {
                   aria-label="lab API tabs example"
                 >
                   <Tab label="Editor" value="1" />
-                  {/* <Tab label="Personal Data" value="2" /> */}
+                  <Tab label="Personal Data" value="2" />
                 </TabList>
               </Box>
               <TabPanel value="1">
                 <Editor />
               </TabPanel>
-              {/* <TabPanel value="2">
+              <TabPanel value="2">
                 <PersonalData />
-              </TabPanel> */}
+              </TabPanel>
             </TabContext>
           </Box>
         </div>

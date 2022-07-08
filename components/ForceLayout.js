@@ -46,7 +46,7 @@ export default class ForceLayout extends React.PureComponent {
 
     function drawNode(d) {
       context.moveTo(d.x + 3, d.y);
-      context.arc(d.x, d.y, 30, 0, 2 * Math.PI);
+      context.arc(d.x, d.y, 6, 0, 2 * Math.PI);
     }
   }
 

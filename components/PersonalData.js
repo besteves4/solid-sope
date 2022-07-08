@@ -16,7 +16,6 @@ export function PersonalData() {
   return (
     <div className="row">
       <div className="App">
-        <h1>{session.info.webId}</h1>
         <ForceLayout />
       </div>
     </div>

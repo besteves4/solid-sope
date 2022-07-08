@@ -9,24 +9,16 @@ export default class ForceLayout extends React.PureComponent {
     width = canvas.width,
     height = canvas.height;
 
-/*     var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("charge", d3.forceManyBody())
-        .force("center", d3.forceCenter()); */
-
-      var simulation = d3.forceSimulation(data.nodes)
-        .force("charge", d3.forceManyBody())
-        .force("link", d3.forceLink(data.links))
-        .force("center", d3.forceCenter());
+    var simulation = d3.forceSimulation(data.nodes)
+      .force("charge", d3.forceManyBody())
+      .force("link", d3.forceLink(data.links))
+      .force("center", d3.forceCenter());
 
     console.log(simulation)
     console.log(data)
 
     simulation
         .on("tick", ticked);
-
-/*     simulation.force("link")
-        .links(data.links); */
 
     function ticked() {
       context.clearRect(0, 0, width, height);
@@ -54,7 +46,7 @@ export default class ForceLayout extends React.PureComponent {
 
     function drawNode(d) {
       context.moveTo(d.x + 3, d.y);
-      context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
+      context.arc(d.x, d.y, 30, 0, 2 * Math.PI);
     }
   }
 

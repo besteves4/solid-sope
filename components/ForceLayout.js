@@ -14,6 +14,9 @@ export default class ForceLayout extends React.PureComponent {
         .force("charge", d3.forceManyBody())
         .force("center", d3.forceCenter());
 
+    console.log(simulation)
+    console(data)
+
     d3.json(data, function(error, graph) {
       if (error) throw error;
 

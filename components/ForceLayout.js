@@ -17,35 +17,31 @@ export default class ForceLayout extends React.PureComponent {
     console.log(simulation)
     console.log(data)
 
-    d3.json(data, function(error, graph) {
-      if (error) throw error;
+    simulation
+        .nodes(data.nodes)
+        .on("tick", ticked);
 
-      simulation
-          .nodes(graph.nodes)
-          .on("tick", ticked);
+    simulation.force("link")
+        .links(data.links);
 
-      simulation.force("link")
-          .links(graph.links);
+    function ticked() {
+      context.clearRect(0, 0, width, height);
+      context.save();
+      context.translate(width / 2, height / 2 + 40);
 
-      function ticked() {
-        context.clearRect(0, 0, width, height);
-        context.save();
-        context.translate(width / 2, height / 2 + 40);
+      context.beginPath();
+      data.links.forEach(drawLink);
+      context.strokeStyle = "#aaa";
+      context.stroke();
 
-        context.beginPath();
-        graph.links.forEach(drawLink);
-        context.strokeStyle = "#aaa";
-        context.stroke();
+      context.beginPath();
+      data.nodes.forEach(drawNode);
+      context.fill();
+      context.strokeStyle = "#fff";
+      context.stroke();
 
-        context.beginPath();
-        graph.nodes.forEach(drawNode);
-        context.fill();
-        context.strokeStyle = "#fff";
-        context.stroke();
-
-        context.restore();
-      }
-    });
+      context.restore();
+    }
 
     function drawLink(d) {
       context.moveTo(d.source.x, d.source.y);

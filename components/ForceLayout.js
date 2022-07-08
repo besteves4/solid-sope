@@ -22,9 +22,8 @@ export default class ForceLayout extends React.PureComponent {
     console.log(simulation)
     console.log(data)
 
-/*     simulation
-        .nodes(data.nodes)
-        .on("tick", ticked); */
+    simulation
+        .on("tick", ticked);
 
 /*     simulation.force("link")
         .links(data.links); */

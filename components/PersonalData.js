@@ -18,7 +18,6 @@ export function PersonalData() {
       <div className="App">
         <h1>{session.info.webId}</h1>
         <ForceLayout />
-        {/* <ForceLayout width={400} height={330} /> */}
       </div>
     </div>
   );

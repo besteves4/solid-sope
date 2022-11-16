@@ -23,7 +23,7 @@
     "@inrupt/solid-ui-react": "^2.8.0",
     "@inrupt/vocab-common-rdf": "^1.0.5",
     "@mui/icons-material": "^5.8.4",
-    "@mui/lab": "^5.0.0-alpha.87",
+    "@mui/lab": "^5.0.0-alpha.108",
     "@mui/material": "^5.8.5",
     "clsx": "^1.1.1",
     "d3": "^7.4.4",

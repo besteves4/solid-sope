@@ -13,10 +13,7 @@ export default class ForceLayout extends React.PureComponent {
       .force("charge", d3.forceManyBody())
       .force("link", d3.forceLink(data.links))
       .force("center", d3.forceCenter());
-
-    console.log(simulation)
-    console.log(data)
-
+      
     simulation
         .on("tick", ticked);
 

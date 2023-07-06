@@ -4,13 +4,12 @@ import data from "../data/data.json";
 
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
-    // var canvas = document.querySelector("canvas"),
-    var canvas = document.querySelector("svg"),
+    /*     var canvas = document.querySelector("canvas"),
     context = canvas.getContext("2d"),
     width = canvas.width,
     height = canvas.height;
 
-/*     var simulation = d3.forceSimulation(data.nodes)
+    var simulation = d3.forceSimulation(data.nodes)
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter())
       .force("link", d3.forceLink().links(data.links));
@@ -47,6 +46,8 @@ export default class ForceLayout extends React.PureComponent {
       context.moveTo(d.x + 3, d.y);
       context.arc(d.x, d.y, 6, 0, 2 * Math.PI);
     } */
+
+    var width = 400, height = 300;
 
     var nodes = [
       {name: 'A'},

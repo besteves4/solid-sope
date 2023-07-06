@@ -57,7 +57,7 @@ body,
 }
 
 .line {
-  stroke: #ccc;
+  stroke: red;
 }
 
 .text {

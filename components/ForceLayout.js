@@ -124,11 +124,13 @@ export default class ForceLayout extends React.PureComponent {
 
   render() {
     // return <canvas width="960" height="500"></canvas>;
-    return (<div id="content">
-    <svg width="400" height="300">
-      <g class="links"></g>
-      <g class="nodes"></g>
-    </svg>
-  </div>);
+    return (
+      <div id="content">
+        <svg width="400" height="300">
+          <g className="links"></g>
+          <g className="nodes"></g>
+        </svg>
+      </div>
+    );
   }
 }

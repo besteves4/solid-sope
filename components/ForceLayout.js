@@ -103,7 +103,7 @@ export default class ForceLayout extends React.PureComponent {
     }
 
     function updateNodes() {
-      u = d3.select('.nodes')
+      var u = d3.select('.nodes')
         .selectAll('text')
         .data(nodes)
         .join('text')

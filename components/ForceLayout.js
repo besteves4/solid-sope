@@ -103,23 +103,19 @@ export default class ForceLayout extends React.PureComponent {
     }
 
     function updateNodes() {
-      var u = d3.select('.nodes')
-        .selectAll('text')
+      d3.select('svg')
+        .selectAll('circle')
         .data(nodes)
-        .join('text')
-        .text(function(d) {
-          return d.name
-        })
-        .attr('x', function(d) {
+        .join('circle')
+        .attr('r', 10)
+        .attr('cx', function(d) {
           return d.x
         })
-        .attr('y', function(d) {
+        .attr('cy', function(d) {
           return d.y
-        })
-        .attr('dy', function(d) {
-          return 5
         });
     }
+    
   }
 
   render() {

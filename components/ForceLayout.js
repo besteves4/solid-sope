@@ -4,7 +4,8 @@ import data from "../data/data.json";
 
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
-    var canvas = document.querySelector("canvas"),
+    // var canvas = document.querySelector("canvas"),
+    var canvas = document.querySelector("svg"),
     context = canvas.getContext("2d"),
     width = canvas.width,
     height = canvas.height;

@@ -4,7 +4,7 @@ import data from "../data/data.json";
 
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
-    var width = 400, height = 300;
+    var width = 960, height = 500;
 
     var nodes = [
       {name: 'A'},
@@ -64,7 +64,7 @@ export default class ForceLayout extends React.PureComponent {
         .selectAll('circle')
         .data(nodes)
         .join('circle')
-        .attr('r', 10)
+        .attr('r', 30)
         .attr('cx', function(d) {
           return d.x
         })

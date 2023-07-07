@@ -4,8 +4,8 @@ import data from "../data/data.json";
 
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
-    var width = 960, height = 500;
-    var colorScale = ['lightblue', 'orange', '#B19CD9', 'red'];
+    var width = 1200, height = 500;
+    var colorScale = ['lightblue', 'orange', '#B19CD9', 'indianred'];
 
     var nodes = [
       {name: 'Permission', category: 0},
@@ -97,7 +97,7 @@ export default class ForceLayout extends React.PureComponent {
   render() {
     return (
       <div id="content">
-        <svg width="960" height="500">
+        <svg width="1200" height="500">
           <g className="links"></g>
           <g className="nodes"></g>
         </svg>

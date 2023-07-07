@@ -26,7 +26,7 @@ export default class ForceLayout extends React.PureComponent {
     var simulation = d3.forceSimulation(nodes)
       .force('charge', d3.forceManyBody().strength(-100))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('collision', d3.forceCollide().radius(40))
+      .force('collision', d3.forceCollide().radius(50))
       .force('link', d3.forceLink().distance(100).links(links));
     
     simulation.on('tick', ticked);
@@ -60,7 +60,7 @@ export default class ForceLayout extends React.PureComponent {
         .selectAll('circle')
         .data(nodes)
         .join('circle')
-        .attr('r', 30)
+        .attr('r', 40)
         .attr('cx', function(d) {
           return d.x
         })

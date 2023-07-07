@@ -65,8 +65,8 @@ line {
 }
 
 text {
-	fill: #ddd;
-	font-size: 12px;
+	fill: black;
+	font-size: 11px;
 	text-anchor: middle;
 	font-weight: bold;
 }

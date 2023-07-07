@@ -8,12 +8,12 @@ export default class ForceLayout extends React.PureComponent {
     var colorScale = ['lightblue', 'orange', '#B19CD9'];
 
     var nodes = [
-      {name: 'Permission', category: 1},
-      {name: 'Marketing', category: 2},
-      {name: 'Legal Compliance', category: 2},
-      {name: 'Social', category: 3},
-      {name: 'Financial', category: 3},
-      {name: 'Professional', category: 3},
+      {name: 'Permission', category: 0},
+      {name: 'Marketing', category: 1},
+      {name: 'Legal Compliance', category: 1},
+      {name: 'Social', category: 2},
+      {name: 'Financial', category: 2},
+      {name: 'Professional', category: 2},
     ]
     
     var links = [

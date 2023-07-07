@@ -31,7 +31,7 @@ export default class ForceLayout extends React.PureComponent {
     var simulation = d3.forceSimulation(nodes)
       .force('charge', d3.forceManyBody().strength(-100))
       .force('center', d3.forceCenter(width / 2, height / 2))
-      .force('link', d3.forceLink().links(links));
+      .force('link', d3.forceLink().distance(100).links(links));
     
     simulation.on('tick', ticked);
 

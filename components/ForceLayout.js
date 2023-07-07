@@ -124,7 +124,7 @@ export default class ForceLayout extends React.PureComponent {
       <div id="content">
         <svg width="400" height="300">
           <g className="links"></g>
-          <g className="nodes"></g>
+          <g className="circle"></g>
         </svg>
       </div>
     );

@@ -7,25 +7,20 @@ export default class ForceLayout extends React.PureComponent {
     var width = 960, height = 500;
 
     var nodes = [
-      {name: 'A'},
-      {name: 'B'},
-      {name: 'C'},
-      {name: 'D'},
-      {name: 'E'},
-      {name: 'F'},
-      {name: 'G'},
-      {name: 'H'},
+      {name: 'Permission'},
+      {name: 'Marketing'},
+      {name: 'Legal Compliance'},
+      {name: 'Social'},
+      {name: 'Financial'},
+      {name: 'Professional'},
     ]
     
     var links = [
       {source: 0, target: 1},
       {source: 0, target: 2},
-      {source: 0, target: 3},
-      {source: 1, target: 6},
-      {source: 3, target: 4},
-      {source: 3, target: 7},
-      {source: 4, target: 5},
-      {source: 4, target: 7}
+      {source: 1, target: 3},
+      {source: 2, target: 4},
+      {source: 2, target: 5},
     ]
 
     var simulation = d3.forceSimulation(nodes)

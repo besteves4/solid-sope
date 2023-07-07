@@ -118,8 +118,9 @@ export default class ForceLayout extends React.PureComponent {
 
       circle
         .append('text')
-        .attr('dy', 4)
-        .text('A');
+        .text('A')
+        .attr('y', 50)
+        .attr('x', 30);
     }
 
     function addTextToNodes() {

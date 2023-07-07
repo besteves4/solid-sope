@@ -104,7 +104,7 @@ export default class ForceLayout extends React.PureComponent {
     }
 
     function updateNodes() {
-      var circle = d3.select('.nodes')
+      d3.select('.nodes')
         .selectAll('circle')
         .data(nodes)
         .join('circle')
@@ -116,11 +116,22 @@ export default class ForceLayout extends React.PureComponent {
           return d.y
         });
 
-      circle
-        .append('text')
-        .text('A')
-        .attr('y', 50)
-        .attr('x', 30);
+      d3.select('.nodes')
+        .selectAll('text')
+        .data(nodes)
+        .join('text')
+        .text(function(d) {
+          return d.name
+        })
+        .attr('x', function(d) {
+          return d.x
+        })
+        .attr('y', function(d) {
+          return d.y
+        })
+        .attr('dy', function(d) {
+          return 5
+        });
     }
 
     function addTextToNodes() {

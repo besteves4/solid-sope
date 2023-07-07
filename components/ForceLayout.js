@@ -5,7 +5,7 @@ import data from "../data/data.json";
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
     var width = 960, height = 500;
-    var colorScale = ['lightblue', 'orange', '#B19CD9'];
+    var colorScale = ['lightblue', 'orange', '#B19CD9', 'red'];
 
     var nodes = [
       {name: 'Permission', category: 0},
@@ -14,6 +14,7 @@ export default class ForceLayout extends React.PureComponent {
       {name: 'Social', category: 2},
       {name: 'Financial', category: 2},
       {name: 'Professional', category: 2},
+      {name: 'Prohibition', category: 3},
     ]
     
     var links = [
@@ -22,6 +23,8 @@ export default class ForceLayout extends React.PureComponent {
       {source: 1, target: 3},
       {source: 2, target: 4},
       {source: 2, target: 5},
+      {source: 6, target: 1},
+      {source: 6, target: 2},
     ]
 
     var simulation = d3.forceSimulation(nodes)

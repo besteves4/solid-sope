@@ -1,8 +1,7 @@
 import { useSession } from "@inrupt/solid-ui-react";
-// import ForceLayout from "./ForceLayout";
 import dynamic from "next/dynamic";
 
-const ForceLayout = dynamic(() => import("../components/ForceLayout"), {
+const ForceLayout = dynamic(() => import("./ForceLayout"), {
   ssr: false,
 });
 

@@ -5,14 +5,15 @@ import data from "../data/data.json";
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
     var width = 960, height = 500;
+    var colorScale = ['lightblue', 'orange', '#B19CD9'];
 
     var nodes = [
-      {name: 'Permission'},
-      {name: 'Marketing'},
-      {name: 'Legal Compliance'},
-      {name: 'Social'},
-      {name: 'Financial'},
-      {name: 'Professional'},
+      {name: 'Permission', category: 1},
+      {name: 'Marketing', category: 2},
+      {name: 'Legal Compliance', category: 2},
+      {name: 'Social', category: 3},
+      {name: 'Financial', category: 3},
+      {name: 'Professional', category: 3},
     ]
     
     var links = [
@@ -61,6 +62,9 @@ export default class ForceLayout extends React.PureComponent {
         .data(nodes)
         .join('circle')
         .attr('r', 40)
+        .style('fill', function(d) {
+          return colorScale[d.category];
+        })
         .attr('cx', function(d) {
           return d.x
         })

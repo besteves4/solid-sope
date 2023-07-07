@@ -4,7 +4,7 @@ import data from "../data/data.json";
 
 export default class ForceLayout extends React.PureComponent {
   componentDidMount() {
-    var width = 960, height = 500;
+    var width = 1500, height = 500;
 
     var nodes = [
       {name: 'A'},
@@ -94,7 +94,7 @@ export default class ForceLayout extends React.PureComponent {
   render() {
     return (
       <div id="content">
-        <svg width="400" height="300">
+        <svg width="1500" height="500">
           <g className="links"></g>
           <g className="nodes"></g>
         </svg>

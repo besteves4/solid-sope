@@ -113,7 +113,9 @@ export default class ForceLayout extends React.PureComponent {
         })
         .attr('cy', function(d) {
           return d.y
-        });
+        })
+        .append('text')
+        .text('A');;
     }
     
   }

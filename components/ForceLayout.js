@@ -104,7 +104,7 @@ export default class ForceLayout extends React.PureComponent {
     }
 
     function updateNodes() {
-      var nodes = d3.select('.nodes')
+      var circle = d3.select('.nodes')
         .selectAll('circle')
         .data(nodes)
         .join('circle')
@@ -116,7 +116,7 @@ export default class ForceLayout extends React.PureComponent {
           return d.y
         });
 
-      nodes
+      circle
         .append('text')
         .attr('dy', 4)
         .text('A');

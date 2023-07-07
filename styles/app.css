@@ -64,7 +64,7 @@ line {
   stroke: #ccc;
 }
 
-.nodes text {
+g.nodes text {
 	fill: #ddd;
 	font-size: 70px;
 	text-anchor: middle;

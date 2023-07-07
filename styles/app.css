@@ -64,7 +64,7 @@ line {
   stroke: #ccc;
 }
 
-circle text {
+text {
 	fill: #ddd;
 	font-size: 70px;
 	text-anchor: middle;

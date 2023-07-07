@@ -105,10 +105,10 @@ export default class ForceLayout extends React.PureComponent {
     function updateNodes() {
       d3.select('.nodes')
         .selectAll('circle')
-        .append('text')
-        .text('A')
         .data(nodes)
         .join('circle')
+        .append('text')
+        .text('A')
         .attr('r', 10)
         .attr('cx', function(d) {
           return d.x

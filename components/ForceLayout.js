@@ -81,6 +81,7 @@ export default class ForceLayout extends React.PureComponent {
     function ticked() {
       updateLinks()
       updateNodes()
+      addTextToNodes()
     }
 
     function updateLinks() {
@@ -107,8 +108,6 @@ export default class ForceLayout extends React.PureComponent {
         .selectAll('circle')
         .data(nodes)
         .join('circle')
-        .append('text')
-        .text('A')
         .attr('r', 10)
         .attr('cx', function(d) {
           return d.x
@@ -116,6 +115,14 @@ export default class ForceLayout extends React.PureComponent {
         .attr('cy', function(d) {
           return d.y
         });
+    }
+
+    function addTextToNodes() {
+      d3.selectAll('circle')
+        .append('text')
+        .text("A")
+        .attr('y', 50)
+        .attr('x', 30);
     }
     
   }

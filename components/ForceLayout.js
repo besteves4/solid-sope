@@ -84,7 +84,7 @@ export default class ForceLayout extends React.PureComponent {
     }
 
     function updateLinks() {
-      var u = d3.select('.links')
+      d3.select('.links')
         .selectAll('line')
         .data(links)
         .join('line')
@@ -103,7 +103,7 @@ export default class ForceLayout extends React.PureComponent {
     }
 
     function updateNodes() {
-      d3.select('svg')
+      d3.select('.nodes')
         .selectAll('circle')
         .data(nodes)
         .join('circle')
@@ -124,7 +124,7 @@ export default class ForceLayout extends React.PureComponent {
       <div id="content">
         <svg width="400" height="300">
           <g className="links"></g>
-          <g className="circle"></g>
+          <g className="nodes"></g>
         </svg>
       </div>
     );

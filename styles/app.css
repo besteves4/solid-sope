@@ -60,6 +60,17 @@ circle {
   fill: cadetblue;
 }
 
+line {
+  stroke: #ccc;
+}
+
+text {
+  text-anchor: middle;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  fill: #666;
+  font-size: 16px;
+}
+
 body {
   margin: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
